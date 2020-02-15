@@ -1,0 +1,363 @@
+
+{% extends 'base.html' %}
+{% block pageSpecificCSS %}
+<!-- overall question panel , question -->
+<style media="screen">
+  main.container{
+    margin:0;
+    margin-top:5em;
+    width:100%;
+  }
+  p{
+    word-break:break-all;
+  }
+  .questionPanel ul,.questionOption{
+    list-style:none;
+    padding:0;
+  }
+  .questionPanel ul li ,.col-sm-1 p{
+    background-color: #8259FE;
+    border-radius:50%;
+    border:1px solid white;
+    width:-moz-fit-content;
+    width:40px;
+    height:40px;
+    padding:5px 0 0 5px;
+    color:white;
+    box-shadow:1px 1px 5px black;
+    transition:.25s;
+
+  }
+  .questionPanel ul li:hover{
+    font-weight:1000;
+    box-shadow:1px 1px 10px black;
+    cursor:pointer;
+  }
+  .col-sm-1 p:hover{
+    font-weight:1000;
+    box-shadow:1px 1px 10px black;
+    cursor:pointer;
+  }
+  .questionPanel ul .line::after{
+
+  	content: '';
+  	height: 50px;
+  	width: 5px;
+  	display: inline-block;
+  	margin-top:5px;
+  	transform: translateX(440%);
+  	background: white;
+
+  	box-shadow: 1px 1px 5px black;
+
+  }
+  .timer{
+    width:auto;
+    padding:0 15px;
+    float:right;
+  }
+  .timer button,.info button{
+    padding:.5em;
+    background:white;
+    box-shadow:1px 1px 5px black;
+    border:1px solid grey;
+    border-radius:4px;
+  }
+  .questionPanel ul li.active,.questionPanel p.active{
+    background-color:#000033;
+  }
+
+  .questionText,.questionOption,.buttons{
+    background:white;
+    padding:1em;
+    box-shadow: 1px 1px 5px black;
+    border-radius:4px;
+  }
+  .question{
+    padding:0;
+  }
+  .questionPanel .col-sm-2{
+    margin-right:5px;
+  }
+  .timer button::before{
+    content:'Timer :';
+    font-size:10px;
+    position:relative;
+    margin-right:5px;
+
+  }
+  .info{
+    padding:0 15px;
+    display:inline-block;
+    width:auto;
+  }
+  @media screen and (max-width:500px){
+    .buttons .col-xs-6,.buttons .col-sm-6{
+      padding:0;
+    }
+    button[type="submit"]{
+      float:none;
+    }
+    .timer button::before{
+      left:50%;
+    }
+    .col-xs-9{
+      margin-bottom:1em;
+    }
+  }
+  footer.container-fluid{
+    display:none;
+    position:absolute;
+    bottom:0;
+  }
+  label{
+    font-weight:normal;
+  }
+</style>
+
+<!-- buttonns -->
+<style media="screen">
+  button[name="previous"],button[name="next"],button[type="submit"]{
+    box-shadow: 0 2px 5px grey;
+    padding: .5em;
+    border-radius: 4px;
+    margin-left:1em;
+  }
+  button[type="submit"]{
+    float:right;
+    background: chartreuse;
+    border: 1px solid darkgreen;
+  }
+  button[name="previous"],button[name="next"]{
+    background: cyan;
+    border: 1px solid darkcyan;
+  }
+  main.container button:hover{
+    box-shadow: 0 2px 10px grey;
+  }
+  main.container button:active{
+    box-shadow: 0 2px 10px grey;
+  }
+
+</style>
+{% endblock  %}
+
+{% block body %}
+<main class="container">
+  <!-- timer -->
+  <div class="row" style="margin-bottom:10px;">
+    <!-- <div class="info">
+      <button type="button" name="answered" value="0" disabled>Answered : 0</button>
+    </div>
+    <div class="info">
+      <button type="button" name="marked" value="0" disabled>Marked for review : 0</button>
+    </div> -->
+    <div class="col-sm-1 timer">
+      <button type="button" name="button" disabled>30 : 00</button>
+    </div>
+  </div>
+
+  <div class="row" >
+    <!-- mobile view question panel -->
+    <div class="row mobileViewQP" style="display:none;">
+      <div class="col-sm-1 col-md-1 col-xs-3">
+        <div class="row">
+          <div class="col-sm-12 questionPanel">
+            <ul>
+              {% for q in questions %}
+              {% if forloop.counter == 1 %}
+                <li class="{{forloop.counter}} active">{{forloop.counter}}</li>
+              {% else %}
+                <div class="line"></div>
+                <li class="{{forloop.counter}}">{{forloop.counter}}</li>
+              {% endif %}
+              {% endfor %}
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- question panel -->
+    <div class="col-sm-1 col-md-3 col-xs-3">
+      <div class="row  questionPanel">
+        {% for q in questions %}
+        <div class="col-sm-2">
+
+              {% if forloop.counter == 1 %}
+              <p style="display:inline-block;" class="{{forloop.counter}} active">{{forloop.counter}}</p>
+              {% else %}
+
+              <p style="display:inline-block;" class="{{forloop.counter}}">{{forloop.counter}}</p>
+              {% endif %}
+
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- question -->
+    <div class="col-sm-11 col-md-9 col-xs-9">
+      <form id="test-form" method="post" enctype="multipart/form-data">
+
+
+        {% for q in questions %}
+        {% if forloop.counter == 1 %}
+            <div class="col-sm-12 col-xs-12 question" id="{{forloop.counter}}">
+              <p class="questionText">
+                Q.{{forloop.counter}}&nbsp;{{q.question}}
+              </p>
+              {% if q.image %}
+                <p class="questionText" style="text-align:center;">
+                <img src="{{q.image.url}}">
+              </p>
+              {% endif %}
+              <ul class="questionOption">
+                {% for o in q.option_set.all %}
+                  {% if o.image %}
+                    <li><label for="{{o.uid}}"><input type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp;<img src="{{o.image.url}}"></label></li>
+                  {% else %}
+                    <li><label for="{{o.uid}}"><input type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp;{{o.text}}</label></li>
+                  {% endif %}
+                {% endfor %}
+
+
+              </ul>
+            </div>
+        {% else %}
+            <div class="col-sm-12 col-xs-12 question hide" id="{{forloop.counter}}">
+              <p class="questionText">Q.{{forloop.counter}}&nbsp;{{q.question}}</p>
+              <ul class="questionOption">
+                {% for o in q.option_set.all %}
+                  {% if o.image %}
+                    <li><label for="{{o.uid}}"><input type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp;<img src="{{o.image.url}}"></label></li>
+                  {% else %}
+                    <li><label for="{{o.uid}}"><input type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp;{{o.text}}</label></li>
+                  {% endif %}
+                {% endfor %}
+
+              </ul>
+            </div>
+        {% endif %}
+
+        {% endfor %}
+
+      </form>
+      <div class="col-sm-12 col-xs-12 buttons">
+        <div class="col-sm-6 col-xs-6">
+          <button type="button" name="previous">Previous</button>
+          <button type="button" name="next">Next</button>
+        </div>
+        <div class="col-sm-6 col-xs-6">
+          <button form="test-form" type="submit" name="button">Submit Test</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block pageSpecificJS %}
+<!-- next ,previous ,question number click jump -->
+<script type="text/javascript">
+
+  $('button[name="next"]').on('click',()=>{
+
+    var a=$('.question').not('.hide');
+    var id=parseInt(a[0].id);
+    id++;
+    if ($('.question#'+id).length == 0) {
+      return;
+    }
+    else{
+      $('.question').not('.hide').addClass('hide');
+      $('.question#'+id).removeClass('hide');
+      $('.questionPanel li.active').removeClass('active');
+      $('.questionPanel p.active').removeClass('active');
+      $('.questionPanel li.'+id).addClass('active');
+      $('.questionPanel p.'+id).addClass('active');
+
+    }
+
+
+  });
+  $('button[name="previous"]').on('click',()=>{
+    var a=$('.question').not('.hide');
+    var id=parseInt(a[0].id);
+    id--;
+    if ($('.question#'+id).length == 0) {
+      return;
+    }
+    else{
+      $('.question').not('.hide').addClass('hide');
+      $('.question#'+id).removeClass('hide');
+      $('.questionPanel li.active').removeClass('active');
+      $('.questionPanel p.active').removeClass('active');
+      $('.questionPanel li.'+id).addClass('active');
+      $('.questionPanel p.'+id).addClass('active');
+
+    }
+
+  });
+
+  $('.questionPanel li').on('click',function(event){
+      var id=event.target.className.split(' ')[0]
+    $('.questionPanel li.active').removeClass('active')
+    $('.questionPanel li.'+id).addClass('active')
+    $('.question').not('.hide').addClass('hide');
+    $('.question#'+id).removeClass('hide');
+  });
+  $('.questionPanel p').on('click',function(event){
+        var id=event.target.className.split(' ')[0]
+        $('.questionPanel p.active').removeClass('active')
+        $('.questionPanel p.'+id).addClass('active')
+        $('.question').not('.hide').addClass('hide');
+        $('.question#'+id).removeClass('hide');
+  });
+
+
+  //timer//////
+  var time=1800;
+  function timer(){
+    var min=parseInt(time/60);
+    var sec=time%60;
+    $('.timer button').html(min+' : '+sec);
+    time=time-1;
+
+  }
+  $(document).ready(()=>{
+    setInterval(timer,1000);
+  });
+  // ends////
+  $('button[type="submit"]').click(function(event){
+    //TARUN REMOVE EVRYTHING BELOW AFTER YOU HAVE SEND EMAIL CODE FROM VIEWS ON THIS FORM SUBMIT
+
+    alert('Thanks.Your test result will be sent to your gmail account');
+
+  });
+</script>
+
+<!-- info updates -->
+<!-- <script type="text/javascript">
+  $('input[type="radio"]').on('click',function(event){
+    event.preventDefault();
+    var name='input[name="'+$(this)[0].attributes.name.value+'"]:checked';
+    console.log($(name))
+    if($(name)){
+
+    }
+    else{
+      var i=$('button[name="answered"]').val();
+      i=parseInt(i);
+      i++;
+      $('button[name="answered"]').val(i)
+      $('button[name="answered"]').text('Answered : '+i);
+    }
+
+
+  });
+</script> -->
+{% endblock %}

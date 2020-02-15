@@ -1,0 +1,63 @@
+{% load static %}
+{% load i18n %}
+<html>
+<head>
+    <title>IRSC | Road Safety NGO </title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'cityhead/vendor/bootstrap/css/bootstrap.min.css' %}">
+
+<style>
+td{
+    border:2px solid;
+    padding:20px;
+}
+th{
+    border:2px solid;
+}
+</style>
+</head>
+
+
+<body>
+<div class='container'>
+<table>
+						<thead>
+							<tr class="table100-head">
+								<th >{% trans "Question"%}</th>
+								<th >{% trans "Question"%} {% trans "Image"%}</th>
+								<th >{% trans "Option"%} 1 </th>
+								<th >{% trans "Option"%}2</th>
+								<th >{% trans "Option"%}3</th>
+								<th >{% trans "Option"%}4</th>
+                                <th >{% trans "Option"%}5</th>
+							</tr>
+						</thead>
+						<tbody>
+                            {% for q in qs %}
+								<tr>
+									<td >{{ q.question }}</td>
+                                    {% if q.image %}
+									<td ><img src='{{ q.image.url }}'></td>
+                                    {% else %}
+                                    <td ></td>
+                                    {% endif %}
+                                    {% for o in q.option_set.all %}
+									{% if o.image %}
+                                        <td ><img src='{{ o.image.url }}'></td>
+                                    {% else %}
+                                        <td>{{ o.text }}</td>
+                                    {% endif %}
+									{% endfor %}
+								</tr>
+							{% endfor %}
+
+
+						</tbody>
+					</table>
+
+
+</div>
+</body>
+
+</html>

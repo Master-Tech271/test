@@ -1,0 +1,335 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% block body %}
+{% block pageSpecificCSS %}
+
+<style>
+img {
+  border-radius: 8px;
+}
+.notifications {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  width: 350px;
+  z-index: 1;
+}
+.notification p {
+  margin-right: 20px;
+}
+body{
+  background:#F2F3F3;
+  overflow-x:hidden;
+  width:100%;
+}
+main#container{
+  width:100%;
+  margin-top:3em;
+  padding:.1em;
+
+}
+
+.row .col-md-12 h4{
+  display:inline-block;
+  color:white;
+  border-radius:4px;
+  padding:.5em;
+  background:blueviolet;
+  text-align:center;
+
+}
+</style>
+{% endblock %}
+<style>
+    body{background-color: #f2f4f4}
+    .container,.row{width: 100%;height: auto;}
+  .paneler{
+    overflow:scroll;
+    overflow-y:scroll;
+    vertical-align: top;
+
+    display: inline-block;
+    width: 300px;
+    background-color: white;
+    height: 400px;
+    margin:0 10px;
+
+  }
+  .displayer{
+    margin-left: 2em;
+
+    position: relative;
+    display: inline-block;
+    width: 75%;
+    height: 400px;
+    background-color: transparent;
+  }
+  .panel-item:hover{
+    background-color: #f2f4f4;
+  }
+  .panel{width: 100%;height: auto;}
+
+  .panel-item{
+
+    width: 99.9%;height: 45px;background-color: #ffffff;text-align:center;padding-top: 5px;border-radius: 0px;
+    border-bottom: 2px solid #ccc;}
+    .framer{width: 100%;height: 400px;}
+    .v1,.v2,.v3,.v4,.v5,.v6,.v7,.v8,.v9,.v10,.v11,.v12,.v13{display: none;}
+  @media(max-width: 800px){
+    .col-md-3.col-xs-12{
+      margin-left:20px;
+    }
+    .paneler,.displayer,.framer{
+      width: 100%;border-radius: 0px;
+      margin-left: 20px;
+    }
+    .paneler{overflow-y:scroll;margin-top: 0px;width: 100%;margin-left: 0px;}
+  }
+
+</style>
+<!-- loader for iframe -->
+<style media="screen">
+   .col-md-9.col-xs-12{
+     background:url({% static 'img/loading.gif' %});
+     background-repeat:no-repeat;
+     background-position:center;
+     background-size:40px 40px;
+   }
+   input[type="submit"]{
+     margin:0;
+     padding:1em;
+     height:auto;
+
+   }
+   input[type="submit"]:hover{
+     opacity:.8;
+     cursor:pointer;
+   }
+   #loginForm{
+     display:inline-block!important;
+   }
+   .row form{
+     padding:1em;
+     background:white;
+     border:1px solid #23415C;
+     border-radius:2px;
+   }
+</style>
+ <main id="container">
+
+<div class="container">
+
+
+<div class="row">
+
+  <div class="col-md-12" style="text-align:center;margin-top:5px;">
+    <h4 >Road Safety Video Tutorials</h4>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-9 col-xs-12">
+
+      <iframe  class="v1 framer" src="https://www.youtube.com/embed/FVN2zkjaL6Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v2 framer"  src="https://www.youtube.com/embed/QUemzqTXnB0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v3 framer" src="https://www.youtube.com/embed/o4TTCvHeEKM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v4 framer" src="https://www.youtube.com/embed/_Q0PNJkD9cs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v5 framer"src="https://www.youtube.com/embed/eRh-TMXJlpQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v6 framer" src="https://www.youtube.com/embed/W30RYlsH78w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v7 framer" src="https://www.youtube.com/embed/U-202fDq6nM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v8 framer" src="https://www.youtube.com/embed/OFAvhP-_JB8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v9 framer" src="https://www.youtube.com/embed/FcMep90bt1M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v10 framer" src="https://www.youtube.com/embed/7-1E4R0ALdc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v11 framer" src="https://www.youtube.com/embed/LlvdhAIBKZQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class="v12 framer" src="https://www.youtube.com/embed/4orIbOfjhcU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe class=" v13 framer" src="https://www.youtube.com/embed/4AnT1Y2PKgU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+    </div>
+
+    <div class="col-md-3 col-xs-12">
+      <div class="paneler">
+        <h4 style="position:relative;padding:1em;background:blueviolet;text-align:center;color:white;font-weight:700;">List of tutorials</h4>
+        <div class="panel">
+          <div class="panel-item" id="v1" onclick="ShowVideo(this.id);">
+            First Responder 1
+
+          </div>
+          <div class="panel-item" id="v2" onclick="ShowVideo(this.id);">
+            Second Chance Episode 1
+
+          </div>
+          <div class="panel-item" id="v3" onclick="ShowVideo(this.id);">
+            Second Chance Episode 2
+
+          </div>
+          <div class="panel-item" id="v4" onclick="ShowVideo(this.id);">
+            3 Lifting Shifting
+
+          </div>
+          <div class="panel-item" id="v5" onclick="ShowVideo(this.id);">
+            4 Bone Fracture
+          </div>
+          <div class="panel-item" id="v6" onclick="ShowVideo(this.id);">
+            5 Multiple Fractures
+
+          </div>
+          <div class="panel-item" id="v7" onclick="ShowVideo(this.id);">
+            6 Head Injury
+
+          </div>
+          <div class="panel-item" id="v8"onclick="ShowVideo(this.id);">
+            7 Updated Unresponsive
+
+          </div>
+          <div class="panel-item" id="v9" onclick="ShowVideo(this.id);">
+            8 Updated Burn Injury
+
+          </div>
+          <div class="panel-item" id="v10"onclick="ShowVideo(this.id);">
+            9 Seizure Attack
+
+          </div>
+          <div class="panel-item" id="v11" onclick="ShowVideo(this.id);">
+            10 Spinal Injury
+
+          </div>
+          <div class="panel-item" id="v12" onclick="ShowVideo(this.id);">
+            11 Updated Choking Victim
+
+          </div>
+          <div class="panel-item" id="v13" onclick="ShowVideo(this.id);">
+            12 Shock Victim
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <br>
+  <div class="row">
+  <div class="col-md-12" style="text-align:center;">
+    <a onclick="set()"><button class="btn btn-primary" style="background:blueviolet;">Check your knowledge : Give Test</button></a>
+    </div>
+  </div>
+
+
+
+</div>
+
+  </div>
+</main>
+<!-- video-player-like  js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).on('load',myFunction());
+  function myFunction(){
+    document.getElementsByClassName('v1')[0].style.display = 'block';
+    document.getElementById('v1').addClass="active"
+  }
+
+    function ShowVideo(id){
+      document.getElementsByClassName('v13')[0].style.display = 'none';
+      document.getElementById('v13').addClass="active"
+      document.getElementsByClassName('v12')[0].style.display = 'none';
+      document.getElementById('v12').addClass="active"
+      document.getElementsByClassName('v11')[0].style.display = 'none';
+      document.getElementById('v11').addClass="active"
+      document.getElementsByClassName('v10')[0].style.display = 'none';
+      document.getElementById('v10').addClass="active"
+      document.getElementsByClassName('v9')[0].style.display = 'none';
+      document.getElementById('v9').addClass="active"
+      document.getElementsByClassName('v8')[0].style.display = 'none';
+      document.getElementById('v8').addClass="active"
+      document.getElementsByClassName('v7')[0].style.display = 'none';
+      document.getElementById('v7').addClass="active"
+      document.getElementsByClassName('v6')[0].style.display = 'none';
+      document.getElementById('v6').addClass="active"
+      document.getElementsByClassName('v5')[0].style.display = 'none';
+      document.getElementById('v5').addClass="active"
+      document.getElementsByClassName('v4')[0].style.display = 'none';
+      document.getElementById('v4').addClass="active"
+      document.getElementsByClassName('v3')[0].style.display = 'none';
+      document.getElementById('v3').addClass="active"
+      document.getElementsByClassName('v2')[0].style.display = 'none';
+      document.getElementById('v2').addClass="active"
+              document.getElementsByClassName('v1')[0].style.display = 'none';
+              document.getElementById('v1').addClass="active"
+      document.getElementsByClassName(id)[0].style.display = 'block';
+      document.getElementById(id).addClass="active"
+
+      for (i=1;i<13;i++){
+          var d=$('.v'+i);
+          var url = d.attr('src');
+    d.attr('src', '');
+    d.attr('src', url);
+      }
+
+    }
+
+
+</script>
+<script type="text/javascript">
+  function set(){
+        $('#ajaxContainer').fadeIn();
+        $(".ui-notification-container").notification("create", {
+          title: "Sign in with google for taking test",
+          content: "You are being redirected to google account sign in page."
+        },
+        {
+          show: {
+            effect: 'bounce',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          },
+          hide: {
+            effect: 'clip',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          }
+        });
+
+        url = '{% url "setses" %}';
+        $.ajax({
+          url: url,
+          method: "POST",
+          dataType: "json",
+          data: {'type':'drivingtest'},
+          success: function(response){
+
+            window.open("{% url 'social:begin' 'google-oauth2' %}","new", "height=1000,width=1300");
+            $('#ajaxContainer').fadeOut();
+            // window.location.href = "{% url 'social:begin' 'google-oauth2' %}";
+          },
+          error: function(){
+            $(".ui-notification-container").notification("create", {
+              title: "Error",
+              content: "There is some error in signing in with google please try again later."
+            },
+            {
+              show: {
+                effect: 'bounce',
+                options: {},
+                speed: 250,
+                callback: function(){}
+              },
+              hide: {
+                effect: 'clip',
+                options: {},
+                speed: 250,
+                callback: function(){}
+              }
+            });
+          }
+        });
+
+    }
+</script>
+
+{% endblock %}

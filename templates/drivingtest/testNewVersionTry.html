@@ -1,0 +1,717 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Toyota Hackathon 2018 : CodeForIndia</title>
+    <meta name="description" content="student Hackathon organized by Indian Institute of Technology,Delhi in December 2018.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootsnav.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/portal.css">
+    <link rel="stylesheet" href="assets/css/onlineTest.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" crossorigin="anonymous">
+
+</head>
+
+<body style="overflow-x:hidden !important;height:100%;">
+
+		<nav class="navbar navbar-default bootsnav navbar-fixed white on menu-center no-full" id="navbar" style="display: none;">
+            <div class="container">
+
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li style="font-size: 120%">
+                            <a href="/logout">
+                                <i class="fas fa-power-off icon-color"></i>
+                            </a>
+                        </li>
+                        <li style="font-size: 120%">
+                            <a href="assets/docs/terms.pdf" target="_blank">
+                                <i class="fas fa-file icon-color"></i>
+                            </a>
+                        </li>
+                        <li style="font-size: 120%">
+                            <a href="https://www.facebook.com/" target="_blank">
+                                <i class="fab fa-facebook-f icon-color"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+
+
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                        <i class="fa fa-bars" style="color: #FFF;"></i>
+                    </button>
+
+                    <a class="navbar-brand" href="index.jsp#landing" style="padding: 10px; margin: 0px; height: 100%; vertical-align: center">
+                        <img src="assets/images/whiteA.png" class="logo logo-scrolled" alt="" padding-top="10px;" width="auto" height="60px;">
+                    </a>
+                    <!--<img src="assets/images/logoh.png" class="img-fluid logo-scrolled" alt="" style="margin-top: 2vh;">-->
+                </div>
+                <!-- End Header Navigation -->
+                <!-- navbar menu -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-center">
+                        <li>
+                            <a href="#">TOYOTA HACKAHTON 2018 : ONLINE TEST</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+
+
+        <div class="col-lg-12" style="text-align:center; margin-top:1rem; height:78%;">
+
+        <div class="row" id="startTest" style="display: none;">
+        <!-- Instructions for the test -->
+        <div class="conatiner" style="margin-top:10rem;text-align:center;">
+		<div class="row bg-white" style="display:inline-block;border-radius:10px; ">
+		<div class="col-lg-12">
+		<h3 class="alert alert-info">Enter the details and click start test</h3>
+		<ul class="list-group">
+<li class="list-group-item">
+
+<br>
+<!-- =====form======= -->
+<form action="javascript:startTest()">
+  <div class="form-group">
+    <!-- <input type="email" class="form-control" id="InputEmail1" required  placeholder="Enter email"> -->
+    <input type="text" list="teamlist" class="form-control" id="InputTeam1" required="" placeholder="Enter team">
+  <datalist id="teamlist">
+  <option value="Internet Explorer">
+  </option><option value="Firefox">
+  </option><option value="Chrome">
+  </option><option value="Opera">
+  </option><option value="Safari">
+</option></datalist>
+    <input type="text" list="schoollist" class="form-control" id="InputSchool1" required="" placeholder="Enter school">
+    <datalist id="schoollist">
+  <option value="Internet Explorer">
+  </option><option value="Firefox">
+  </option><option value="Chrome">
+  </option><option value="Opera">
+  </option><option value="Safari">
+</option></datalist>
+    <!-- <input type="password" class="form-control" id="InputPassword1" required placeholder="Password"> -->
+  </div>
+
+  <button type="submit" class="btn btn-start-test">START TEST !</button>
+</form>
+<!-- =====form ends======= -->
+	</li>
+
+</ul>
+		</div>
+		</div>
+		</div>
+        </div><!-- row test paper ends -->
+
+
+		<div class="row" id="testPaper" style="display: block;">
+        <div class="col-lg-3 col-xs-10 questionPanel">
+        <div class="row white"><p id="timer" style="display: inline-block;">Time: 1:14:47</p></div>
+        <hr>
+        <div class="row white">
+		<!-- <div class="col-xs-6"><img class="img-fluid" alt="Porfile Pic" src="assets/images/2.png" width="60px"></div> -->
+		<div class="col-xs-12"><p>TEAM NAME <br>TEAM LEADER</p></div>
+        </div>
+
+        <div class="row">
+        <div class="col-xs-12 alert alert-success" id="typeOfQuestion">Aptitude</div>
+        <p>Choose a question:</p>
+        </div>
+        <!-- for aptitude section :question btn -->
+        <div class="col-xs-12 qpBtn" id="AptitudeBtn">
+		<button class="btn btn-light AptitudeBtn  alert alert-info" id="Aptitudeqp1" onclick="changeQuestion(event)">Q1</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp2" onclick="changeQuestion(event)">Q2</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp3" onclick="changeQuestion(event)">Q3</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp4" onclick="changeQuestion(event)">Q4</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp5" onclick="changeQuestion(event)">Q5</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp6" onclick="changeQuestion(event)">Q6</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp7" onclick="changeQuestion(event)">Q7</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp8" onclick="changeQuestion(event)">Q8</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp9" onclick="changeQuestion(event)">Q9</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp10" onclick="changeQuestion(event)">Q10</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp11" onclick="changeQuestion(event)">Q11</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp12" onclick="changeQuestion(event)">Q12</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp13" onclick="changeQuestion(event)">Q13</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp14" onclick="changeQuestion(event)">Q14</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp15" onclick="changeQuestion(event)">Q15</button>
+		<button class="btn btn-light AptitudeBtn" id="Aptitudeqp16" onclick="changeQuestion(event)">Q16</button>
+		</div>
+		<!-- for Programming section :question btn -->
+		<div class="col-xs-12 qpBtn hide" id="ProgrammingBtn">
+		<button class="btn btn-light ProgrammingBtn alert alert-info" id="Programmingqp1" onclick="changeQuestion(event)">Q1</button>
+		<button class="btn btn-light ProgrammingBtn" id="Programmingqp2" onclick="changeQuestion(event)">Q2</button>
+		<button class="btn btn-light ProgrammingBtn" id="Programmingqp3" onclick="changeQuestion(event)">Q3</button>
+		</div>
+		<!-- for Science section :question btn -->
+		<div class="col-xs-12 qpBtn hide" id="ScienceBtn">
+		<button class="btn btn-light ScienceBtn alert alert-info" id="Scienceqp1" onclick="changeQuestion(event)">Q1</button>
+		<button class="btn btn-light ScienceBtn" id="Scienceqp2" onclick="changeQuestion(event)">Q2</button>
+		<button class="btn btn-light ScienceBtn" id="Scienceqp3" onclick="changeQuestion(event)">Q3</button>
+		</div>
+
+        <div class="col-xs-12" style="margin:0 0 10px 0;">
+		<p style="margin:10px 0 0 0;">Question Info:</p>
+		<button class="btn btn-light" disabled="">Not Visited</button>
+		<button class="btn btn-success" disabled="">Answered</button>
+		<button class="btn btn-danger" disabled="">Not Answered</button>
+
+
+		<button class="btn btn-warning" disabled="">Marked for review</button>
+		<button class="btn btn-info" disabled="">Reviewed &amp; Answered	</button>
+		</div>
+        </div>
+
+        <div class="col-lg-8 col-xs-10 questionContent">
+        <div class="row alert alert-lightblue">
+        <div class="col-12">
+        	<button class="btn btn-primary" type="button" onclick="changeSection(event)">Aptitude</button>
+        	<button class="btn btn-primary" type="button" onclick="changeSection(event)">Programming</button>
+        	<button class="btn btn-primary" type="button" onclick="changeSection(event)">Science</button>
+			<br>
+        </div>
+        </div>
+
+        <form action="javascript:onSubmit()">
+
+        <div class="row white section" id="Aptitude" style="overflow:auto; height:380px;">
+        <div class="col-lg-12 Aptitude" id="Aptitudeq1">
+
+        	<div class="row">
+        	<br>
+        	<h5>aptitude ipsum 1 aptitude ipsum 1 aptitude ipsum 1 aptitude ipsum 1 aptitude ipsum 1 aptitude ipsum 1 aptitude ipsum 1 aptitude ipsum 1 </h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q1" value="1.science ipsum"> 1.aptitude ipsum1</label><br>
+        	<label><input type="radio" name="q1" value="2.science ipsum"> 2.aptitude ipsum1</label><br>
+        	<label><input type="radio" name="q1" value="3.science ipsum"> 3.aptitude ipsum1</label><br>
+        	<label><input type="radio" name="q1" value="4.science ipsum"> 4.aptitude ipsum1</label><br>
+        	         <!-- ###########Timer for each question of aptitude################ -->
+            <input type="number" name="{{q.uid+'timer'}}" class="questionTimer" value="0">
+            <!-- ###########Timer for each question ENDS ################ -->
+        	</div>
+
+        	</div>
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq2">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 2</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q2" value="1.science ipsum"> 1.aptitude ipsum2</label><br>
+        	<label><input type="radio" name="q2" value="2.science ipsum"> 2.aptitude ipsum2</label><br>
+        	<label><input type="radio" name="q2" value="3.science ipsum"> 3.aptitude ipsum2</label><br>
+        	<label><input type="radio" name="q2" value="4.science ipsum"> 4.aptitude ipsum2</label>
+        	<!-- ###########Timer for each question of aptitude################ -->
+            <input type="number" name="{{q.uid+'timer'}}" class="questionTimer" value="0">
+            <!-- ###########Timer for each question ENDS ################ -->
+
+        	</div>
+
+        	</div>
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq3">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 3</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+        	<!-- ###########Timer for each question of aptitude################ -->
+            <input type="number" name="{{q.uid+'timer'}}" class="questionTimer" value="0">
+            <!-- ###########Timer for each question ENDS ################ -->
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq4">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 3</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+        	<!-- ###########Timer for each question of aptitude################ -->
+            <input type="number" name="{{q.uid+'timer'}}" class="questionTimer" value="0">
+            <!-- ###########Timer for each question ENDS ################ -->
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq4">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 4</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq5">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 5</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq6">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 6</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq7">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 7</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq8">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 8</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq9">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 9</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq10">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 10</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq11">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 11</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq12">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 12</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq13">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 13</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq14">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 14</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq15">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 15</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        <div class="col-lg-12 Aptitude hide" id="Aptitudeq16">
+
+        <div class="row">
+        <br>
+        	<h5>aptitude ipsum 16</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.aptitude ipsum"> 1.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.aptitude ipsum"> 2.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.aptitude ipsum"> 3.aptitude ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.aptitude ipsum"> 4.aptitude ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+        </div>
+
+        <!-- for Programming section -->
+        <div class="row white section hide" id="Programming" style="overflow:auto; height:380px;">
+        <div class="col-lg-12 Programming" id="Programmingq1">
+
+        	<div class="row">
+        	<br>
+        	<h5>Programming ipsum 1</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q1" value="1.Programming ipsum"> 1.Programming ipsum1</label><br>
+        	<label><input type="radio" name="q1" value="2.Programming ipsum"> 2.Programming ipsum1</label><br>
+        	<label><input type="radio" name="q1" value="3.Programming ipsum"> 3.Programming ipsum1</label><br>
+        	<label><input type="radio" name="q1" value="4.Programming ipsum"> 4.Programming ipsum1</label>
+        	<!-- ###########Timer for each question of aptitude################ -->
+            <input type="number" name="{{q.uid+'timer'}}" class="questionTimer" value="0">
+            <!-- ###########Timer for each question ENDS ################ -->
+        	</div>
+
+        	</div>
+        </div>
+        <div class="col-lg-12 Programming hide" id="Programmingq2">
+
+        <div class="row">
+        <br>
+        	<h5>Programming ipsum 2</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q2" value="1.Programming ipsum"> 1.Programming ipsum2</label><br>
+        	<label><input type="radio" name="q2" value="2.Programming ipsum"> 2.Programming ipsum2</label><br>
+        	<label><input type="radio" name="q2" value="3.Programming ipsum"> 3.Programming ipsum2</label><br>
+        	<label><input type="radio" name="q2" value="4.Programming ipsum"> 4.Programming ipsum2</label>
+
+        	</div>
+        	</div>
+        </div>
+        <div class="col-lg-12 Programming hide" id="Programmingq3">
+
+        <div class="row">
+        <br>
+        	<h5>Programming ipsum 3</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.Programming ipsum"> 1.Programming ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="2.Programming ipsum"> 2.Programming ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="3.Programming ipsum"> 3.Programming ipsum3</label><br>
+        	<label><input type="radio" name="q3" value="4.Programming ipsum"> 4.Programming ipsum3</label>
+
+        	</div>
+
+        	</div>
+
+        </div>
+
+        </div>
+        <!-- for aptitude science -->
+        <div class="row white section hide" id="Science" style="overflow:auto;height:380px;">
+        <div class="col-lg-12 Science" id="Scienceq1">
+
+        	<div class="row">
+        	<br>
+        	<h5>science ipsum 1</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q1" value="1.science ipsum"> 1.science ipsum 1</label><br>
+        	<label><input type="radio" name="q1" value="2.science ipsum"> 2.science ipsum 1</label><br>
+        	<label><input type="radio" name="q1" value="3.science ipsum"> 3.science ipsum 1</label><br>
+        	<label><input type="radio" name="q1" value="4.science ipsum"> 4.science ipsum 1</label><br>
+        	 <!-- ###########Timer for each question of aptitude################ -->
+            <input type="number" name="{{q.uid+'timer'}}" class="questionTimer" value="0">
+            <!-- ###########Timer for each question ENDS ################ -->
+
+        	</div>
+
+        	</div>
+        </div>
+        <div class="col-lg-12 Science hide" id="Scienceq2">
+
+        <div class="row">
+        <br>
+        	<h5>science ipsum 2</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q2" value="1.science ipsum"> 1.science ipsum 2</label><br>
+        	<label><input type="radio" name="q2" value="2.science ipsum"> 2.science ipsum 2</label><br>
+        	<label><input type="radio" name="q2" value="3.science ipsum"> 3.science ipsum 2</label><br>
+        	<label><input type="radio" name="q2" value="4.science ipsum"> 4.science ipsum 2</label>
+
+
+        	</div>
+
+        	</div>
+        </div>
+        <div class="col-lg-12 Science hide" id="Scienceq3">
+
+        <div class="row">
+        <br>
+        	<h5>science ipsum 3</h5>
+        	<hr>
+        	<div class="col-lg-6">
+
+
+        	<label><input type="radio" name="q3" value="1.science ipsum"> 1.science ipsum 3</label><br>
+        	<label><input type="radio" name="q3" value="2.science ipsum"> 2.science ipsum 3</label><br>
+        	<label><input type="radio" name="q3" value="3.science ipsum"> 3.science ipsum 3</label><br>
+        	<label><input type="radio" name="q3" value="4.science ipsum"> 4.science ipsum 3</label>
+
+
+        	</div>
+
+        	</div>
+
+        </div>
+
+        </div>
+
+		<br>
+		<div class="row alert alert-lightblue">
+
+			<div class="col-lg-6">
+			<button type="button" class="btn btn-warning Aptitudeq1" id="markBtn" onclick="markForReview()">MARK FOR REVIEW</button>
+        	<button type="button" class="btn btn-info Aptitudeq1" id="previousBtn" onclick="changeToPreviousQuestion(event)" disabled="">PREVIOUS</button>
+        	<button type="button" class="btn btn-info Aptitudeq1" id="nextBtn" onclick="changeToNextQuestion(event)">NEXT</button>
+        	</div>
+
+
+        	<!-- hidden input fields to be sent along with others -->
+        	<input type="text" id="school" name="school">
+        	<input type="text" id="team" name="team">
+        	<!-- hidden input fields to be sent along with others ENDS-->
+        	<div class="col-lg-3" style="float:right;">
+        	<button type="submit" class="btn btn-danger">SUBMIT</button>
+        	</div>
+
+		</div>
+
+
+		</form>
+        </div>
+
+        </div>
+        </div>
+		<div id="break" class="">
+		<br>
+		</div>
+
+	<footer id="footer" class="footer" style="display: none;">
+            <div class="row">
+                <div class="col-md-3 hidden-sm hidden-xs c" style="padding-top: 2vh;padding-bottom: 2vh;">
+                    <img src="assets/images/whiteA.png" class="logo logo-scrolled b" alt="" padding-top="10px;" width="auto" height="60px;">
+                </div>
+                <div class="col-md-6 col-sm-12 c" style="padding-top: 2vh;padding-bottom: 2vh;color: #DDD;">
+
+                        <div class="row">
+                            <div class="col-md-12"><i class="fas fa-envelope b"></i> &nbsp;<a href="mailto:info@road-safety.co.in" style="color: #ddd">info@road-safety.co.in</a></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 b"><i class="fas fa-phone"></i> &nbsp;<a href="tel:+91-__________" style="color: #ddd">+91-__________</a></div>
+                        </div>
+                        <br>
+                        <div class="b">
+                            <small>&nbsp;<a href="https://www.road-safety.co.in/" target="_blank">Indian Road Safety Campaign</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="assets/docs/terms.pdf" target="_blank">TERMS &amp; CONDITIONS</a>
+                              <br> 201, Building No. 252a, Shahpur Jat, Nearby Govindum Sweets, New Delhi, 110049.
+                             </small>
+                              <br>
+                              <ul class="ib">
+                              <li><a href="https://www.toyotabharat.com/" target="_blank">Toyota</a></li>
+                              <li><a href="https://www.ilfsindia.com/" target="_blank">IL&amp;FS</a></li>
+                              </ul>
+                        </div>
+                </div>
+                </div>
+        </footer>
+	<script src="assets/js/vendor/jquery-1.11.2.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.min.js"></script>
+    <script src="assets/js/onlineTest.js"></script>
+
+
+
+
+
+</body></html>

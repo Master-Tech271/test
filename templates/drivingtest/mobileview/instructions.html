@@ -1,0 +1,69 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+<style>
+        body{
+            font-family: 'Source Sans Pro', sans-serif; 
+            background-color: #F0F0F7;
+        }
+        h1{
+            font-size:1.4em;
+        }
+        h2{
+            font-size:1.2em
+        }
+        .container{
+            padding: 20px;
+            background-color: white;
+            color:#43425D;
+            margin: 70px 12px 20px 10px;
+           
+        }
+
+        
+      
+        
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container" >
+    <h1 style="font-weight:800;font-family: 'Source Sans Pro', sans-serif; text-align: center;"><strong>{% trans "DRIVING LICENCE PRACTICE TEST"%}</strong></h1>
+    
+        <br>
+        <h2 style="text-align: center;font-family: 'Source Sans Pro', sans-serif;color:#43425D"><strong>{% trans "INSTRUCTIONS FOR TEST"%}</strong></h2>
+        <hr style="border-top:1px solid #707070">
+        <p >
+               <b> 1.</b> {% trans "Test consists of 30 questions related to driving , traffic rules and general road safety awareness."%}
+                </p>
+                <p >
+                <b> 2.</b> {% trans "Test duration is 30 minutes , after which the test will be submitted automatically.  The result and feedback will be shown as well as sent to your email."%}
+                </p>
+                <p >
+                <b> 3.</b> {% trans "No negative marking is there."%}
+                </p>
+                <p >
+                <b> 4.</b> {% trans "Neither close this window nor open any other window, otherwise test will be aborted."%}
+                </p>
+                <p >
+                <b> 5.</b> {% trans "You can use arrow keys to navigate through questions."%}
+                </p>
+                <p >
+               <b> 6.</b> {% trans "You can use '1','2','3','4','5' num keys to respectively mark answers to the question on screen."%}
+                </p>
+                <p >
+                <b> 7.</b> {% trans "Use '0' or 'delete' or 'backspace' key to unanswer a response and 'm' key to mark for review."%}
+                </p>
+                <p >
+                <b> 8.</b> {% trans "'Mark for review' means marking a question for review if you have doubt in it.The answer ,if marked ,stays irrespective of marking the question for review."%}
+         </p>
+    
+    <br><div style="text-align: center;"><button type="button"  value="starttest" onclick="startest()" class="btn btn-lg" style="color: white;background-color:#2F2E50;">{% trans "Start Test"%}</button></div>
+            
+    
+    </div>
+{% endblock %}
+
+{% block pageSpecificJS %}
+{% endblock %}

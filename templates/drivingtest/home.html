@@ -1,0 +1,287 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+<style media="screen">
+  .row .col-md-8{
+    display:inline-block;
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .row .col-md-8 form{
+    background:white;
+    padding:20px 80px 40px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #43425D;
+
+  }
+  .container form a img:hover{
+      cursor:pointer;
+      opacity:0.8;
+  }
+  .guidelines{
+    width:100%;
+  }
+  @media screen and (max-width:500px){
+
+    .row .col-md-8 form{
+      padding: 20px;
+    }
+   }
+</style>
+{% endblock %}
+{% block body %}
+<main class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <form action="{% url 'home' %}" method="post" class="form-group">
+        <h3 style="text-align:center;	padding: 3px; margin-top:10px;	color: #43425D !important;font-family: 'Source Sans Pro', sans-serif;font-weight:bold;">{% trans "For taking the test sign in with your google account" %}</h3><br>
+        {% if not request.user.is_authenticated and not request.user.is_drivingtest %}
+        <h4 style="font-family: 'Source Sans Pro', sans-serif;padding-left:3px;font-weight:600;">
+          {% blocktrans %}
+          Instructions :
+          {% endblocktrans %}
+
+        <!-- </h4><a href="{% url 'instructions' %}">Instructions</a>&nbsp;<a href="{% url 'mobilequestions' %}">Mob Ques</a>&nbsp;<a href="{% url 'mobilequestionpanel' %}">Mob Ques Panel</a>&nbsp;<a href="{% url 'mobilereviewpage' %}">Mob Review Page</a> -->
+        <hr style="color:#43425D">
+        <div class="guidelines">
+
+        <p style="font-family: 'Source Sans Pro', sans-serif;">{% blocktrans %}
+          The driving test provided on this website is only for practise pursposes.
+        The goal is to aware the user about road safety and traffic rules.{% endblocktrans %}
+        </p>
+        <p style="font-family: 'Source Sans Pro', sans-serif;">{% blocktrans %}Please allow the popup window to give test after clicking 'Sign in with Google' button.{% endblocktrans %}
+        </p>
+
+
+        <hr>
+
+        </div>
+        <input type="checkbox" id="tc" name="tc"/>&nbsp;&nbsp;<label for="tc">{% blocktrans %}I have read the above guidelines.{% endblocktrans %}</label><br>
+        <!-- <input class="form-control" type="phone" name="phone" placeholder="Your phone number" > -->
+        <!-- <button onclick="set2()" style="margin-bottom:15px" class="btn btn-warning" type="button" name="sendotp" value="Send OTP">Send OTP</button> -->
+        <!-- <input class="form-control" type="text" name="otp" placeholder="Enter OTP sent to the above E-mail*" > -->
+        <!-- <br><a onclick="set1()" style="display:block;padding:1em;text-align:center; background:red;color:white;box-shadow:0 2px 5px blueviolet;border-radius:2px;">{% trans "Sign in with OTP" %}</a> -->
+        <!-- <h3 style="text-align:center;font-weight:bold;">OR</h3> -->
+        <br><a onclick="set()" style="font-family: 'Source Sans Pro', sans-serif;display:block;padding:1em;text-align:center; background:#43425D;color:white;">Click Here To Start Test</a>
+        {% else %}
+        <p>{% blocktrans %}Already logged in {% endblocktrans %}<a href="{% url 'drivingtest_login' %}">{% blocktrans %}Click here to logout{% endblocktrans %}</a></p>
+        {% endif %}
+        <!-- <img src="{% static 'img/googlesignin.png' %}" onclick="set()" style="width:170px; height:auto;"/> -->
+      </form>
+    </div>
+  </div>
+</main>
+
+
+
+{% endblock %}
+{% block pageSpecificJS %}
+<script>
+  $(".ui-notification-container").notification();
+  // $(window).on('load',function(){
+  //   if(window.screen.width<1029){
+  //     $('.guidelines').append('<p class="list-group-item">You can not give this test on phone or tablet.Test is available only for laptops and personal computers.</p>');
+  //   }
+  // });
+  function set(){
+    var l=$('input[name="tc"]:checked').length;
+    // if(window.screen.width<1029){
+    //
+    //   $(".ui-notification-container").notification("create", {
+    //     title: "Screen size is less",
+    //         content: "Sorry! but you can not give test in this screen size."
+    //     },
+    //     {
+    //         show: {
+    //             effect: 'bounce',
+    //             options: {},
+    //             speed: 250,
+    //             callback: function(){}
+    //         },
+    //         hide: {
+    //             effect: 'clip',
+    //             options: {},
+    //             speed: 250,
+    //             callback: function(){}
+    //         }
+    //     });
+    //     return;
+    // }
+    // else{
+      if(l==1){
+        $('#ajaxContainer').fadeIn();
+        $(".ui-notification-container").css('display','flex')
+        $(".ui-notification-container").notification("create", {
+          title: "Sign in with google",
+          content: "You are being redirected to google account sign in page."
+        },
+        {
+          show: {
+            effect: 'bounce',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          },
+          hide: {
+            effect: 'clip',
+            options: {},
+            speed: 250,
+            callback: function(){
+                $(".ui-notification-container").hide()
+            }
+          }
+        });
+
+        url = '{% url "drivingtest_test" %}';
+        $.ajax({
+          url: url,
+          method: "GET",
+          dataType: "json",
+          data: {'type':'drivingtest'},
+          success: function(response){
+
+            // window.open("{% url 'social:begin' 'google-oauth2' %}","new", "height=1000,width=1300");
+            $('#ajaxContainer').fadeOut();
+            // window.location.href = "{% url 'social:begin' 'google-oauth2' %}";
+          },
+          error: function(){
+            $(".ui-notification-container").css('display','flex')
+            $(".ui-notification-container").notification("create", {
+              title: "Error",
+              content: "There is some error in signing in with google please try again later."
+            },
+            {
+              show: {
+                effect: 'bounce',
+                options: {},
+                speed: 250,
+                callback: function(){}
+              },
+              hide: {
+                effect: 'clip',
+                options: {},
+                speed: 250,
+                callback: function(){$(".ui-notification-container").hide()}
+              }
+            });
+          }
+        });
+
+      }
+      else{
+        $(".ui-notification-container").css('display','flex')
+        $(".ui-notification-container").notification("create", {
+          title: "Read the guidelines",
+          content: "Please read the guidelines and tick the checkbox."
+        },
+        {
+          show: {
+            effect: 'bounce',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          },
+          hide: {
+            effect: 'clip',
+            options: {},
+            speed: 250,
+            callback: function(){$(".ui-notification-container").hide()}
+          }
+        });
+      }
+    // }
+
+
+
+    }
+  function set1(){
+    var l=$('input[name="tc"]:checked').length;
+      if(l==1){
+        $('#ajaxContainer').fadeIn();
+        $(".ui-notification-container").notification("create", {
+          title: "Sign in with OTP",
+          content: "OTP has been sent to your phone"
+        },
+        {
+          show: {
+            effect: 'bounce',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          },
+          hide: {
+            effect: 'clip',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          }
+        });
+
+        url = '#';
+        otp=$('input[name="otp"]').val()
+        $.ajax({
+          url: url,
+          method: "POST",
+          dataType: "json",
+          data: {'otp':otp},
+          success: function(response){
+
+            window.open("{% url 'social:begin' 'google-oauth2' %}","new", "height=1000,width=1300");
+            $('#ajaxContainer').fadeOut();
+            // window.location.href = "{% url 'social:begin' 'google-oauth2' %}";
+          },
+          error: function(){
+            $(".ui-notification-container").notification("create", {
+              title: "Error",
+              content: "There is some error in signing in with google please try again later."
+            },
+            {
+              show: {
+                effect: 'bounce',
+                options: {},
+                speed: 250,
+                callback: function(){}
+              },
+              hide: {
+                effect: 'clip',
+                options: {},
+                speed: 250,
+                callback: function(){}
+              }
+            });
+          }
+        });
+
+      }
+      else{
+        $(".ui-notification-container").notification("create", {
+          title: "Read the guidelines",
+          content: "Please read the guidelines and tick the checkbox."
+        },
+        {
+          show: {
+            effect: 'bounce',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          },
+          hide: {
+            effect: 'clip',
+            options: {},
+            speed: 250,
+            callback: function(){}
+          }
+        });
+      }
+    // }
+
+
+
+    }
+
+
+</script>
+
+{% endblock %}

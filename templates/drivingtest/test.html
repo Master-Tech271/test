@@ -1,0 +1,951 @@
+{% extends 'drivingtest/base.html' %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+<script type="text/javascript">
+  var glob = false;
+  window.addEventListener("beforeunload", function (event) {
+    if(glob){
+      return true;
+    }
+  // Cancel the event as stated by the standard.
+  event.preventDefault();
+  // Chrome requires returnValue to be set.
+  event.returnValue = 'You will loose your submitted answer if you close the window';
+});
+</script>
+<!-- overall question panel , question -->
+<style media="screen">
+  main.container{
+    margin:0;
+    margin-top:5em;
+    width:100%;
+  }
+
+  .questionPanel ul,.questionOption{
+    list-style:none;
+    padding:0;
+  }
+  .questionOption{
+    padding-left:2em;
+  }
+  .questionPanel ul li ,.col-sm-1 p{
+    background-color: #43425D;
+    width:50px;
+    height:50px;
+    padding-top:12px;
+    text-align:center;
+    color:white;
+    transition:.25s;
+
+  }
+  .questionPanel ul li.active,.questionPanel p.active{
+    background-color:#FF6565;
+  }
+  .questionPanel p.green{
+    background-color: #7AFF9B;
+  }
+  .questionPanel p.green.active{
+    background-color: #006400;
+  }
+  .questionPanel p.blue{
+    background-color: #3B86FF;
+  }
+  .questionPanel p.blue.active{
+    background-color: #008b8b;
+  }
+  .questionPanel ul li:hover{
+    font-weight:1000;
+
+    cursor:pointer;
+  }
+  .col-sm-1 p:hover{
+    font-weight:1000;
+
+    cursor:pointer;
+  }
+  .questionPanel ul .line::after{
+
+  	content: '';
+  	height: 50px;
+  	width: 5px;
+  	display: inline-block;
+  	margin-top:5px;
+  	transform: translateX(440%);
+  	background: white;
+
+
+
+  }
+  .timer{
+    width:auto;
+    padding:0 15px;
+    float:right;
+  }
+
+
+  .timer button,.info button{
+    padding:.5em;
+    background:#313044;
+    color:white;
+    border-radius:4px;
+  }
+  .buttons{
+    position:fixed;
+    top:500px;
+  }
+
+  .questionText,.questionOption,.buttons{
+
+    padding:1em;
+
+
+  }
+  .questionText{
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:2em;
+  }
+  .question{
+    padding:0;
+  }
+  .questionPanel .col-sm-2{
+    margin-right:5px;
+  }
+  .timer button::before{
+    content:'Time remaining :';
+    font-size:14px;
+    position:relative;
+    margin-right:5px;
+
+  }
+  .info{
+    padding:0 15px;
+    display:inline-block;
+    width:auto;
+  }
+
+  @media screen and (max-width:500px){
+    .buttons .col-xs-6,.buttons .col-sm-6{
+      padding:0;
+    }
+    button[type="submit"]{
+      float:none;
+    }
+
+    .col-xs-9{
+      margin-bottom:1em;
+    }
+  }
+  footer.container-fluid{
+    display:none;
+    position:absolute;
+    bottom:0;
+  }
+  label{
+    font-weight:normal;
+  }
+</style>
+
+<!-- buttonns -->
+<style media="screen">
+  button[name="markforreview"],button[name="previous"],button[name="next"],button[type="submit"]{
+    box-shadow: 0 2px 5px grey;
+    padding: .5em;
+    border-radius: 4px;
+
+  }
+  button[type="submit"]{
+    float:right;
+    background: chartreuse;
+    border: 1px solid darkgreen;
+  }
+  button[name="previous"],button[name="next"]{
+    background: cyan;
+    border: 1px solid darkcyan;
+  }
+  button[name="next"]{
+     padding-left:1.45em;
+    padding-right:1.45em;
+  }
+  button[name="markforreview"]{
+    background: orange;
+    border: 1px solid darkorange;
+    margin-left:16px;
+
+  }
+  main.container button:hover{
+    box-shadow: 0 2px 10px grey;
+  }
+  main.container button:active{
+    box-shadow: 0 2px 10px grey;
+  }
+
+</style>
+<style media="screen">
+  a:hover{
+    cursor:pointer;
+  }
+button[value="starttest"],button[data-dismiss="modal"]{
+  background:#43425D!important;
+}
+button[value="starttest"]:hover{
+  cursor:pointer;
+  opacity:0.8;
+}
+
+#instruction .modal-header,#instructionsModal .modal-header{
+  font-family: 'Source Sans Pro', sans-serif;
+  text-align:center;
+  text-transform:uppercase;
+
+}
+
+</style>
+<!-- responsive -->
+<style media="screen">
+  @media screen and (max-width:500px){
+
+  .timer,.btns{
+    padding-top:10px;
+  }
+}
+  @media screen and (max-width:450px){
+    body{
+      font-size:13px;
+    }
+  .timer,.btns{
+    padding-top:10px;
+  }
+  .btns{
+    float:left!important;
+  }
+  .mfr{
+    float:right;
+  }
+  .btnstoggle{
+    width:300px;
+    margin-bottom:1em;
+  }
+
+}
+img{
+  max-height:430px!important;
+}
+.noQuestionImage{
+  display:block;
+}
+.questionBody{
+  display:flex;
+}
+#test-form{
+  background-color:white;
+  min-height:536pxpx;
+  margin-bottom:10px;
+  font-size:2rem;
+}
+
+#test-form input[type='radio'] {
+  margin-right:15px;
+  margin-bottom:15px;
+
+}
+#test-form input[type='radio']:after {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        top: -10px;
+        left: -1px;
+        position: relative;
+        background-color: #d1d3d1;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+
+  #test-form  input[type='radio']:checked:after {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: -10px;
+    left: -1px;
+        position: relative;
+        background-color: #7AFF9B;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+    #test-form li label{
+      margin-bottom:30px;
+    }
+#test-form .badge{
+
+    padding: 10px;
+    display: inline-block;
+    margin-left: 15px;
+    border-radius: 4px;
+    color: white;
+    box-shadow:2px 3px 2px lightgray;
+    font-weight: 700;
+}
+.badge.correct{
+  background-color: #7AFF9B;
+}
+.badge.incorrect{
+  background-color: #FF6565;
+}
+</style>
+<!-- styles fxes due to new ui -->
+<style media="screen">
+  .col-sm-1.col-md-3.col-xs-3 .row .col-sm-6{
+    padding:0;
+  }
+</style>
+{% endblock  %}
+{% block navbaritems %}
+
+<!-- <li><a data-toggle="modal" data-target="#instructionsModal" style="font-family:'Roboto Slab',serif"><b>Instructions</b></a></li> -->
+<li><div class="info timer" style="margin-top:8px;font-family: 'Source Sans Pro', sans-serif;">
+  <button type="button" name="button" disabled style="font-family: 'Source Sans Pro', sans-serif;">30 : 00</button>
+</div></li>
+
+{% endblock %}
+
+{% block body %}
+<main class="container">
+  <!-- timer -->
+  <!--<div class="row" style="margin-bottom:10px;">
+    <div class="info">
+      <button type="button" name="answered" value="0" disabled>Answered : 0</button>
+    </div>
+    <div class="info mfr">
+      <button type="button" name="marked" value="0" disabled>Marked for review : 0</button>
+    </div>
+    <div class="info timer">
+      <button type="button" name="button" disabled>30 : 00</button>
+    </div>
+    <div class="info btns" style="float:right">
+
+          <button form="test-form" type="submit" name="button">Submit Test</button>
+          <button form="test-form" type="submit" class="hide" name="hiddensubmit">Submit Test</button>
+        </div>
+  </div>-->
+
+  <div class="row"  style="margin-right:15px;">
+    <!-- mobile view question panel -->
+    <div class="row mobileViewQP" style="display:none;">
+      <div class="col-sm-1 col-md-1 col-xs-3">
+        <div class="row" >
+          <div class="col-sm-12 questionPanel">
+            <ul>
+              {% for q in questions %}
+              {% if forloop.counter == 1 %}
+                <li class="{{forloop.counter}} active">{{forloop.counter}}</li>
+              {% else %}
+                <div class="line"></div>
+                <li class="{{forloop.counter}}">{{forloop.counter}}</li>
+              {% endif %}
+              {% endfor %}
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- question -->
+
+    <div class="col-sm-11 col-md-9 col-xs-9">
+      <form id="test-form" method="post" enctype="multipart/form-data">
+
+
+        {% for q in questions %}
+        {% if forloop.counter == 1 %}
+            <div class="col-sm-12 col-xs-12 question" id="{{forloop.counter}}">
+              <p class="questionText" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+                Q.{{forloop.counter}}&nbsp;{{q.question}}
+              </p>
+              <div class="questionBody">
+              {% if q.image %}
+                <p class="questionText questionImage" style="text-align:left;margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+                  <img src='{{q.image.url}}'>
+                </p>
+                <ul class="questionOption" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+              {% else %}
+                <ul class="questionOption noQuestionImage" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+              {% endif %}
+                {% for o in q.option_set.all %}
+                  {% if o.image %}
+                  {% if o.answer %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}} correct-answer" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; <img src='{{o.image.url}}'></label></li>
+                  {% else %}
+                  <li><label for="{{o.uid}}"><input class="{{forloop.counter0}}" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; <img src='{{o.image.url}}'></label></li>
+                  {% endif %}
+                  {% else %}
+                    {% if not 'None' in o.text %}
+                    {% if o.answer %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}} correct-answer" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                    {% else %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}}" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                    {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                {% for o in q.option_set.all %}
+                {% if 'None' in o.text %}
+                {% if o.answer %}
+                <li><label for="{{o.uid}}"><input class="{{0}} correct-answer" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                {% else %}
+                <li><label for="{{o.uid}}"><input class="{{0}}" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+
+              </ul>
+              </div>
+
+
+
+            </div>
+        {% else %}
+            <div class="col-sm-12 col-xs-12 question hide" id="{{forloop.counter}}" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+              <p class="questionText" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">Q.{{forloop.counter}}&nbsp;{{q.question}}</p>
+              <div class="questionBody">
+
+
+              {% if q.image %}
+                <p class="questionText questionImage" style="text-align:left;margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+                  <img src='{{q.image.url}}'>
+                </p>
+
+              <ul class="questionOption" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+              {% else %}
+              <ul class="questionOption noQuestionImage" style="margin-bottom:0px;font-family: 'Source Sans Pro', sans-serif;">
+              {% endif %}
+                {% for o in q.option_set.all %}
+                  {% if o.image %}
+                    {% if o.answer %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}} correct-answer" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; <img src='{{o.image.url}}'></label></li>
+                    {% else %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}}" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; <img src='{{o.image.url}}'></label></li>
+                    {% endif  %}
+                  {% else %}
+                    {% if not 'None' in o.text %}
+                    {% if o.answer %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}} correct-answer" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                    {% else %}
+                    <li><label for="{{o.uid}}"><input class="{{forloop.counter0}}" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                    {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+                {% for o in q.option_set.all %}
+                {% if 'None' in o.text %}
+                {% if o.answer %}
+                <li><label for="{{o.uid}}"><input class="{{0}} correct-answer" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                {% else %}
+                <li><label for="{{o.uid}}"><input class="{{0}}" type="radio" name="{{q.uid}}" id="{{o.uid}}" value="{{o.uid}}">&nbsp;&nbsp;&nbsp; {{o.text}}</label></li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+
+              </ul>
+              </div>
+
+
+            </div>
+        {% endif %}
+
+        {% endfor %}
+
+      </form>
+      <div class="row">
+        <div class="col-md-6" >
+          <button type="button" class="btn btn-lg" name="clear_response" style="float: left;background-color: #FF6565; border:1px solid #FF6565; color:white;font-family: 'Source Sans Pro', sans-serif;">{% trans "Clear Response"%}</button>
+          <button type="button" class="btn btn-lg" name="markforreview" style="float: left;background-color: #3B86FF; border:1px solid #3B86FF;color:white;font-family: 'Source Sans Pro', sans-serif;margin-left:10px;">{% trans "Mark For Review"%}</button>
+        </div>
+        <div class="col-md-6" style="padding-right:16px;">
+          <button type="button" class="btn btn-lg" name="next" style="float: right;margin-left:10px;background-color: #43425D; border:1px solid #43425D; color:white;font-family: 'Source Sans Pro', sans-serif;">{% trans "Next"%}</button>
+          <button type="button" class="btn btn-lg" name="previous" style="float: right;background-color: #43425D; border:1px solid #43425D;color:white;font-family: 'Source Sans Pro', sans-serif;">{% trans "Previous"%}</button>
+        </div>
+      </div>
+
+
+    </div>
+
+     <!-- question panel -->
+
+     <div class="col-sm-1 col-md-3 col-xs-3" style="background-color:white;box-shadow:0px 2px #000000;padding:2px;">
+        <div class="row" style="font-size:12px ;display:flex;justify-content:space-between;">
+             <strong id="answered" >{% trans "Answered :"%}</strong>
+             <strong id="marked" >{% trans "Marked For Review :"%}</strong>
+          </div>
+        <div class="row questionPanel" style="height:350px; margin:5px;">
+          {% for q in questions %}
+          <div class="col-sm-2">
+
+                {% if forloop.counter == 1 %}
+                <p style="display:inline-block;" class="{{forloop.counter}} active">{{forloop.counter}}</p>
+                {% else %}
+
+                <p style="display:inline-block;" class="{{forloop.counter}}">{{forloop.counter}}</p>
+                {% endif %}
+
+
+          </div>
+          {% endfor %}
+        </div>
+
+        <p style="border-radius:0px;margin-top:5px; margin-left:20px; text-align:left; border:none;width: auto;height:20px;background:white;color:black;font-family: 'Source Sans Pro', sans-serif;box-shadow:none;"> <strong>{% trans "Legend :"%}</strong>  </p>
+        <div class="row" style="margin:0;">
+          <div class="col-sm-6">
+            <div style="background-color:#FF6565; border:1px solid; width:30px; height:30px;float:left; margin:5px 3px 2px 20px;"></div>
+            <p style="color:#43425D;border-radius:0px; margin-left:10px; text-align:left; border:none;width: auto;height:20px;background:white;font-family: 'Source Sans Pro', sans-serif;box-shadow:none;"> <strong>{% trans "Current Not Answered"%}</strong>  </p>
+          </div>
+            <div class="col-sm-6">
+              <div style="background-color:#3B86FF; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 5px;"></div>
+              <p style="color:#43425D;border-radius:0px; margin-left:10px;text-align:left; border:none;width: auto;height:20px;background:white;font-family: 'Source Sans Pro', sans-serif;box-shadow:none;"> <strong>{% trans "Marked for Review"%}</strong> </p>
+            </div>
+        </div>
+        <div class="row" style="margin:0;">
+            <div class="col-sm-6">
+              <div style="background-color:#7AFF9B; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 20px;"></div>
+              <p style="color:#43425D;border-radius:0px; margin-left:10px; text-align:left; border:none;width: auto;height:20px;background:white;font-family: 'Source Sans Pro', sans-serif;box-shadow:none;"><strong>{% trans "Answered"%}</strong> </p>
+            </div>
+            <div class="col-sm-6">
+              <div style="background-color:#006400; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 5px;"></div>
+              <p style="color:#43425D;border-radius:0px; margin-left:10px; text-align:left; border:none;width: auto;height:20px;background:white;font-family: 'Source Sans Pro', sans-serif;box-shadow:none;"><strong>{% trans "Current Already Answered"%}</strong> </p>
+            </div>
+          </div>
+        <div class="row" style="margin:0;">
+            <div class="col-sm-6">
+              <div style="background-color:#008b8b; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 20px;"></div>
+              <p style="color:#43425D;border-radius:0px; margin-left:10px; text-align:left; border:none;width: 250px;height:20px;background:white;font-family: 'Source Sans Pro', sans-serif;box-shadow:none;"><strong>{% trans "Current Marked For Review"%}</strong> </p>
+            </div>
+          </div>
+        <hr style="margin-bottom:5px;border-top:2px solid #eeeeee;">
+        <!-- <button type="button" class="hide" name="previous">Previous</button>
+            <button type="button" name="next">Next</button>
+            <button type="button" name="markforreview" value="1">Mark for Review</button>-->
+
+        <div class="row" style="margin:5px;">
+        <div class="col-sm-12 btnstoggle" style="padding:0;padding-left:30px;">
+
+            <a data-toggle="modal" data-target="#instructionsModal" style="font-family: 'Source Sans Pro', sans-serif;"><button type="button" class="btn btn-lg" name="Instructions" style="background-color: white; border:1px solid #43425D;color:#43425D;float:left;">{% trans "Instructions"%}</button></a>
+            <button type="submit" form="test-form" class="btn btn-lg" name="button" style="background-color: #43425D; border:1px solid #43425D;color:white; float:left; margin-left:15px;">{% trans "Submit Test"%}</button>
+              <button  form="test-form" type="submit" name="hiddensubmit" class="hide btn btn-lg"  style="background-color: #43425D; border:1px solid #43425D;color:white;">{% trans  "Submit Test"%}</button>
+        </div>
+        </div>
+      </div>
+
+  </div>
+
+
+</main>
+
+
+<div class="modal" id="instruction" tabindex="-1" style="background:rgba(0, 0, 0, .7);overflow-y:auto;" role="dialog">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content" style="padding: 10px 40px 10px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="font-family: 'Source Sans Pro', sans-serif; font-weight:bold;color: #2F2E50;">{% trans "Instructions for test"%}</h3>
+
+      </div>
+      <div class="modal-body">
+        <p >
+        1. {% trans "Test consists of 10 questions related to driving , traffic rules and general road safety awareness."%}
+        </p>
+        <p >
+        2. {% trans "Test duration is 30 minutes , after which the test will be submitted automatically.  The result and feedback will be shown as well as sent to your email."%}
+        </p>
+        <p >
+        3. {% trans "No negative marking is there."%}
+        </p>
+        <p >
+        4. {% trans "Neither close this window nor open any other window, otherwise test will be aborted."%}
+        </p>
+
+        <p >
+        5. {% trans "'Mark for review' means marking a question for review if you have doubt in it.The answer ,if marked ,stays irrespective of marking the question for review."%}
+        </p>
+      </div>
+      <div class="modal-footer" style="text-align:center">
+        <button type="button"  value="starttest" onclick="startest()" class="btn btn-lg" style="color: white;">Start Test</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="instructionsModal" tabindex="-1" style="background:rgba(0, 0, 0, .7);overflow-y:auto;" role="dialog">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content" style="padding: 10px 40px 10px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="font-family: 'Source Sans Pro', sans-serif; font-weight:bold;color: #2F2E50;">{% trans "Instructions for test"%}</h3>
+
+      </div>
+      <div class="modal-body">
+        <p >
+        1. {% trans "Test consists of 10 questions related to driving , traffic rules and general road safety awareness."%}
+        </p>
+        <p >
+        2. {% trans "Test duration is 30 minutes , after which the test will be submitted automatically.  The result and feedback will be shown as well as sent to your email."%}
+        </p>
+        <p >
+        3. {% trans "No negative marking is there."%}
+        </p>
+        <p >
+        4. {% trans "Neither close this window nor open any other window, otherwise test will be aborted."%}
+        </p>
+        <p >
+        5. {% trans "'Mark for review' means marking a question for review if you have doubt in it.The answer ,if marked ,stays irrespective of marking the question for review."%}
+        </p>
+      </div>
+      <div class="modal-footer" style="text-align:center">
+        <button type="button" class="btn btn-lg" data-dismiss="modal" style="color: white;">{% trans "Back To Test"%}</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block pageSpecificJS %}
+
+
+<script>
+$(".ui-notification-container").notification();
+var window_focus=true;
+var window_unfocus_count=0;
+var checkInterval;
+$(document).ready(()=>{
+    checkInterval=setInterval(checks,2000);
+});
+
+function checks(){
+  $(window).focus(function() {
+      window_focus = true;
+      window_unfocus_count=0;
+  }).blur(function() {
+      window_focus = false;
+      window_unfocus_count++;
+  });
+  if(window_unfocus_count>150){
+    clearInterval(checkInterval);
+    $('#ajaxContainer').fadeIn();
+    $(".ui-notification-container").notification("create", {
+          title: {% trans "Test will be submitted!" %},
+          content: {% trans "You have stayed unfocussed from this window for more than the limit.Your test will be submitted automatically."%}
+      },
+      {
+          show: {
+              effect: 'bounce',
+              options: {},
+              speed: 250,
+              callback: function(){}
+          },
+          hide: {
+              effect: 'clip',
+              options: {},
+              speed: 250,
+              callback: function(){}
+          }
+      });
+      glob=true;
+    $('#test-form').submit();
+  }
+  if(!window_focus){
+    $(".ui-notification-container").notification("create", {
+          title: {% trans "Stay focussed!"%},
+          content: {% trans "Please stay focussed on this window otherwise your test will be over." %}
+      },
+      {
+          show: {
+              effect: 'bounce',
+              options: {},
+              speed: 250,
+              callback: function(){}
+          },
+          hide: {
+              effect: 'clip',
+              options: {},
+              speed: 250,
+              callback: function(){}
+          }
+      });
+
+  }
+
+}
+
+
+
+</script>
+
+<script type="text/javascript">
+var interval;
+    $('#instruction').fadeIn();
+
+  //timer//////
+    var time=1800;
+    function timer(){
+      var min=parseInt(time/60);
+      var sec=time%60;
+      $('.timer button').html(min+' : '+sec);
+      time=time-1;
+      if(time<=0){
+        glob=true;
+          $('#test-form').submit();
+          $('.timer button').html(min+' : '+sec);
+          clearInterval(interval)
+
+          $(".ui-notification-container").notification("create", {
+                title: "Test submission!",
+                content: "Test is being submitted."
+            },
+            {
+                show: {
+                    effect: 'bounce',
+                    options: {},
+                    speed: 250,
+                    callback: function(){}
+                },
+                hide: {
+                    effect: 'clip',
+                    options: {},
+                    speed: 250,
+                    callback: function(){}
+                }
+            });
+          $('#ajaxContainer').fadeIn();
+
+
+
+
+      }
+
+    }
+    // ends////
+
+    function startest(){
+      $('#instruction').fadeOut();
+      interval=setInterval(timer,1000);
+    }
+</script>
+<!-- next ,previous ,question number click jump -->
+<script type="text/javascript">
+
+  $('button[name="next"]').on('click',()=>{
+    // for showing answer on radio click
+    $('#test-form .badge').remove();
+
+    var a=$('.question').not('.hide');
+    var id=parseInt(a[0].id);
+    id++;
+    if(id==10){
+      $('button[name="next"').addClass('hide');
+    }
+    else{
+      $('button[name="next"').removeClass('hide');
+    }
+    if(id!=1){
+      $('button[name="previous"').removeClass('hide');
+    }
+    else{
+      $('button[name="previous"').addClass('hide');
+    }
+    if ($('.question#'+id).length == 0) {
+      return;
+    }
+    else{
+      $('button[name="markforreview"]').val(id)
+      $('.question').not('.hide').addClass('hide');
+      $('.question#'+id).removeClass('hide');
+      $('.questionPanel li.active').removeClass('active');
+      $('.questionPanel p.active').removeClass('active');
+      $('.questionPanel li.'+id).addClass('active');
+      $('.questionPanel p.'+id).addClass('active');
+
+    }
+
+
+  });
+  $('button[name="previous"]').on('click',()=>{
+    // for showing answer on radio click
+    $('#test-form .badge').remove();
+
+    var a=$('.question').not('.hide');
+    var id=parseInt(a[0].id);
+    id--;
+    if(id==1){
+      $('button[name="previous"').addClass('hide');
+    }
+    else{
+      $('button[name="previous"').removeClass('hide');
+    }
+    if(id!=10){
+      $('button[name="next"').removeClass('hide');
+    }
+    else{
+      $('button[name="next"').addClass('hide');
+    }
+    if ($('.question#'+id).length == 0) {
+      return;
+    }
+    else{
+      $('button[name="markforreview"]').val(id)
+      $('.question').not('.hide').addClass('hide');
+      $('.question#'+id).removeClass('hide');
+      $('.questionPanel li.active').removeClass('active');
+      $('.questionPanel p.active').removeClass('active');
+      $('.questionPanel li.'+id).addClass('active');
+      $('.questionPanel p.'+id).addClass('active');
+
+    }
+
+  });
+
+  $('.questionPanel li').on('click',function(event){
+      var id=event.target.className.split(' ')[0]
+    $('.questionPanel li.active').removeClass('active')
+    $('.questionPanel li.'+id).addClass('active')
+    $('button[name="markforreview"]').val(id)
+    $('.question').not('.hide').addClass('hide');
+    $('.question#'+id).removeClass('hide');
+    // for showing answer on radio click
+    $('#test-form .badge').remove();
+  });
+  $('.questionPanel p').on('click',function(event){
+        var id=event.target.className.split(' ')[0]
+        if(id==1){
+          $('button[name="previous"').addClass('hide');
+        }
+        else{
+          $('button[name="previous"').removeClass('hide');
+        }
+        if(id==10){
+          $('button[name="next"').addClass('hide');
+        }
+        else{
+          $('button[name="next"').removeClass('hide');
+        }
+        $('.questionPanel p.active').removeClass('active')
+        $('.questionPanel p.'+id).addClass('active')
+        $('button[name="markforreview"]').val(id)
+        $('.question').not('.hide').addClass('hide');
+        $('.question#'+id).removeClass('hide');
+
+        // for showing answer on radio click
+        $('#test-form .badge').remove();
+  });
+
+
+
+  $('button[type="submit"]').click(function(event){
+    var bool=confirm("Are you sure to submit the test?")
+    if(bool){
+      glob=true;
+      $('#ajaxContainer').fadeIn();
+      $(".ui-notification-container").notification("create", {
+            title: "Test submitted!",
+            content: "Thanks.Your test result will be sent to your gmail account.You will be redirected to the result page now."
+        },
+        {
+            show: {
+                effect: 'bounce',
+                options: {},
+                speed: 250,
+                callback: function(){}
+            },
+            hide: {
+                effect: 'clip',
+                options: {},
+                speed: 250,
+                callback: function(){}
+            }
+        });
+        return true;
+
+    }
+    else{
+      event.preventDefault();
+      return false;
+    }
+
+
+  });
+</script>
+
+<!-- info updates -->
+<script type="text/javascript">
+  var mfr=0;
+  $('input[type="radio"]').on('click',function(event){
+
+    var id=event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+    $('.questionPanel p.'+id).addClass('green').removeClass('blue');
+
+    var mfr= $('.questionPanel p.blue');
+    $('#marked').text('Marked for review : '+mfr.length);
+    var answered= $('.questionPanel p.green');
+    $('#answered').text('Answered : '+answered.length)
+    // for showing answer on radio click
+    $('#test-form .badge').remove();
+    if($(this).hasClass('correct-answer')){
+
+      $(this).parent().parent().append('<p class="badge correct">Correct</p>');
+
+
+    }else{
+
+        $(this).parent().parent().append('<p class="badge incorrect">Incorrect</p>');
+
+    }
+
+    });
+</script>
+<script type="text/javascript">
+
+
+    $('button[name="markforreview"]').click(function(){
+      // for showing answer on radio click
+      $('#test-form .badge').remove();
+      var id=$('.question:not(.hide)')[0].id;
+      $('.questionPanel p.'+id).removeClass('green').addClass('blue')
+
+      var mfr= $('.questionPanel p.blue');
+      $('#marked').text('Marked for review : '+mfr.length);
+      var answered= $('.questionPanel p.green');
+      $('#answered').text('Answered : '+answered.length)
+    });
+    $('button[name="clear_response"]').click(function(){
+      // for showing answer on radio click
+      $('#test-form .badge').remove();
+
+      $('.question:not(.hide) ul.questionOption input:checked').prop('checked',false);
+      var id=$('.question:not(.hide)')[0].id;
+      $('.questionPanel p.'+id).removeClass('green')
+
+      var mfr= $('.questionPanel p.blue');
+      $('#marked').text('Marked for review : '+mfr.length);
+      var answered= $('.questionPanel p.green');
+      $('#answered').text('Answered : '+answered.length)
+    });
+
+
+</script>
+
+
+
+<script type="text/javascript">
+  $('a[data-target="#instructionsModal"]').click(function(){
+    $('#instructionsModal').css('display','block');
+    $('#instructionsModal').css('visibility','visible');
+    $('#instructionsModal').css('opacity','1');
+  });
+  $('button[data-dismiss="modal"]').click(function(){
+    $('.modal').css('display','none');
+
+  });
+</script>
+
+
+{% endblock %}

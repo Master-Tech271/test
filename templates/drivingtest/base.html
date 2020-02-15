@@ -1,0 +1,643 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>MoRTH Test Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <!-- loader css -->
+    <style media="screen">
+      #ajaxContainer {
+        background: rgba(0, 0, 0, .7);
+        display: block;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10000;
+        color: white;
+      }
+      .loaderdiv {
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        display: inline-block;
+      }
+    </style>
+    <!-- ends -->
+    <link rel="stylesheet" href="{% static 'drivingtest/css/bootstrap3.min.css' %}">
+		<link rel="stylesheet" href="{% static 'drivingtest/css/fontawesome4.css' %}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'drivingtest/css/jquery-ui.min.css' %}">
+    <style media="screen">
+      body,p,a{
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+      #logo{
+        width:150px;margin-left:50px;
+      }
+      .navbar{
+        background-color: #43425D;
+      }
+      .navbar .nav{
+        position: relative;
+        left: 38%;
+        transform: translateX(-50%);
+
+      }
+      .navbar .nav a{
+        color: white!important;
+        text-transform: uppercase;
+      }
+      .navbar .nav a:hover,.right-nav a:hover{
+        color: yellow!important;
+        text-decoration: none;
+      }
+      .navbar .nav a:active,.right-nav a:hover{
+        color: yellow!important;
+        text-decoration: none;
+      }
+      #navbar-para{
+        color:white;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-weight: 600;
+        display:block;
+      }
+      footer{
+        background: #43425D;
+        color: white;
+        width: 100vw;
+      }
+      footer p{
+        font-size: 1em;
+        font-weight:400;
+      }
+      main.container{
+        margin-top: 5em;
+      }
+      body{
+        background-color: #E9ECEF;
+        overflow-x: hidden!important;
+      }
+    </style>
+    <!-- notification style below -->
+    <style media="screen">
+      #content { padding: 20px; }
+
+      .ui-notification-container {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top:0;
+        border-radius: 0;
+        background: rgba(0,0,0,0.8);
+				z-index:100000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+      .ui-notification {
+        padding: 5px 10px;
+        background: white;
+        width:300px;
+        border-radius: 0;
+        color:#43425D;
+
+      }
+
+      .ui-notification .ui-notification-content {
+        font-size: 0.9em;
+      }
+
+      .ui-notification .ui-notification-content h4 {
+        font-size: 1.1em;
+      }
+
+      .ui-notification .ui-notification-content p {
+        font-size: 0.9em;
+      }
+
+      .ui-notification .ui-notification-close {
+        display: inline-block;
+        float: right;
+        width: 19px;
+        padding: 1px;
+        height: 18px;
+        margin: -2px -2px 0 2px;
+      }
+
+      .ui-notification .ui-notification-close:hover,
+      .ui-notification .ui-notification-close:focus {
+        padding: 0;
+      }
+
+      .ui-notification .ui-notification-close span {
+        display: block;
+        margin: 1px;
+      }
+
+    </style>
+    <!-- ends -->
+    <style media="screen">
+      a:hover{
+        text-decoration: none!important;
+        cursor: pointer;
+      }
+    </style>
+    <style media="screen">
+      @media screen and (max-width:1200px){
+       #navbar-para{
+
+       }
+      }
+
+      @media screen and (max-width:991px){
+        #navbar-para{
+
+          font-size: 1.3em;
+        }
+        #logo{
+          width:130px;margin-left:10px;
+        }
+       }
+
+       @media screen and (max-width:767px){
+        #navbar-para{
+
+          font-size: 1.2em;
+        }
+        #logo{
+          width:100px;margin-left:5px;
+        }
+       }
+       @media screen and (max-width:500px){
+        #navbar-para{
+          display:none;
+        }
+        #logo{
+          width:120px;margin-left:0px;
+        }
+        .row .col-md-8 form{
+          padding: 20px;
+        }
+       }
+    </style>
+    <style media="screen">
+      .navbar-header-center{
+        display: inline-flex;
+        width: calc(100% - 450px);
+        justify-content: center;
+      }
+    </style>
+    {% block pageSpecificCSS %}
+    {% endblock %}
+  </head>
+  <body>
+    <div class="ui-notification-container"></div>
+    <div id="ajaxContainer">
+        <div class="loaderdiv">
+            <div class="loader">
+                <img style="width:5rem;" src="https://i.ibb.co/8rmW5mK/loading.gif" alt="" />
+                <br />
+                <span class="loader-text" style="color:white;">{% trans "Loading..."%}</span>
+            </div>
+        </div>
+    </div>
+    {% block navbar %}
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style='background-color:#43425D'>
+      <div class="container-fluid">
+        <div class="navbar-head">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">{% trans "Toggle navigation"%}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'drivingtest_login' %}"><img src="{% static 'drivingtest/img/morth.png' %}"  id="logo"></a>
+
+        </div>
+        <div class="navbar-header-center">
+
+          <h3 class="navbar-text" id="navbar-para">{% trans "DRIVING LICENSE PRACTICE TEST"%}</h3>
+        </div>
+        {%block navbartime %}
+
+        {% endblock %}
+        <div class="collapse navbar-collapse" id="navbar-collapse-main" style="float:right;">
+          <ul class="nav navbar-nav navbar-center">
+            {% block navbaritems %}
+            <li ><a class="active" href="{% url 'home' %}" style="font-family:'Source Sans Pro', sans-serif;font-size:1em;font-weight:200px;"><i class="fas fa-home"></i>&nbsp;{% trans "IRSC Home"%}</<i></a></li>
+            {% endblock %}
+          </ul>
+
+          <ul class="right-nav" style="float:right;list-style:none;height:50px;margin:0;line-height:50px">
+            {% if not request.user.is_anonymous %}
+            <li style="float:right;vertical-align:middle;">
+              <a href="{% url 'drivingtest_login' %}" class="guidance"  style="color:white;text-transform: uppercase;font-family:'Source Sans Pro', sans-serif">{% trans "Logout"%}</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+
+    {% block body %}
+    {% endblock %}
+    <script type="text/javascript" src="{% static 'drivingtest/js/jquery3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'drivingtest/js/jquery-ui.min.js' %}"></script>
+    <!-- loader -->
+    <script type="text/javascript">
+      $(window).on('load',function(){
+          $('#ajaxContainer').fadeOut();
+        });
+    </script>
+    <!-- ends -->
+    <!-- dropdowb list -->
+    <script type="text/javascript">
+      $('a.guidance').click(()=>{
+        $('li ul.dropdown').toggleClass('hide');
+      });
+
+    </script>
+    <!-- ends -->
+
+      {% block footer %}
+			<footer  class="container-fluid text-center" style='position: relative; bottom:0; clear: both;'>
+				<div class="row">
+					<div class="col-sm-4" id="contactus" style="text-align:left;">
+					<h2 style="font-family:'Source Sans Pro', sans-serif; font-weight:bold;">{% trans "Contact Us"%}</h2>
+          <h4 style="font-family: 'Source Sans Pro', sans-serif;">{% trans "Indian Road Safety Campaign"%}, Solve <br><br> </h4>
+             <p style="font-family: 'Source Sans Pro', sans-serif;">{% trans "262, Lane Number 4, Saidulajab, Butterfly Park,"%}<br>{% trans " Saiyad Ul Ajaib Extension, Saket, New Delhi, Delhi-110030"%} <br><br> <i class="fas fa-envelope-square"></i> &nbsp;info@road-safety.co.in <br> <br> <i class="fas fa-globe"></i>&nbsp;http://road-safety.co.in </p>
+
+					</div>
+
+					<div class="col-sm-4" style="text-align:left;margin-top:5px;"><br>
+					<img src="{% static 'drivingtest/img/morth.png' %}" class="icon" width="60%" ><br><br>
+					<a href="http://morth-roadsafety.nic.in/"><img src="{% static 'drivingtest/img/morthsafety.png' %}" class="icon" width="85%"></a><br> <br>
+					<a href="http://morth-roadsafety.nic.in/" style="text-decoration: none; cursor:pointer;color:inherit;">http://morth-roadsafety.nic.in/</a><br>
+					<br><br><p style=" text-align:center;"><a href="https://twitter.com/MORTHIndia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" style="text-decoration: none; cursor:pointer;color:inherit"><i class="fab fa-twitter fa-2x"></i></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/MoRTHIndia/" style="text-decoration: none; cursor:pointer;color:inherit"><i class="fab fa-facebook-f fa-2x"></i></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.instagram.com/morthindia/?hl=en" style="text-decoration: none; cursor:pointer;color:inherit"><i class="fab fa-instagram fa-2x"></i></a>
+        </p></div>
+
+
+
+					<div class="col-sm-4" style="text-align:left;">
+          <h2 style="font-family:'Source Sans Pro', sans-serif; font-weight:bold;">{% trans "Mission Road Safety"%}</h2>
+          <h5 style="font-family:'Source Sans Pro', sans-serif;">{% trans "A portal for road accidents data"%}</h5>
+					<a href="http://www.missionroadsafety.com"><img src="{% static 'drivingtest/img/missionroadsafety.png' %}" class="icon" width="80%"></a><br>
+					<br>
+					<a href="http://www.missionroadsafety.com" style="font-family: 'Source Sans Pro', sans-serif;text-decoration: none; cursor:pointer;color:inherit">www.missionroadsafety.com</a>
+					</div>
+
+					<div class="col-md-12" >
+            <br>
+          <p style="color:white;text-align:center;">&#9400; 2019  <a style="color:white;font-weight:bold;font-family: 'Source Sans Pro', sans-serif;" href="http://ww2.road-safety.co.in/">{% trans "Indian Road Safety Campaign" %}</a> , SOLVE .</p>
+          </div>
+
+			</footer>
+      {% endblock  %}
+<script type="text/javascript">
+      /*
+* jQuery UI Notification
+* Copyright (c) 2011 Marcus Ekwall
+*
+* http://writeless.se/projects/jquery-ui-notification/
+*
+* Depends:
+*   - jQuery 1.4
+*   - jQuery UI 1.8 widget factory
+*
+* Dual licensed under the MIT and GPL licenses:
+*   http://www.opensource.org/licenses/mit-license.php
+*   http://www.gnu.org/licenses/gpl.html
+*
+*/
+(function($) {
+
+// role=application on body required for screenreaders to correctly interpret aria attributes
+if( !$(document.body).is('[role]') ){
+  $(document.body).attr('role','application');
+}
+
+var increments = 0;
+$.widget("ui.notification", {
+  options: {
+      notificationClass: "ui-widget-content",
+      offset: 10,
+      duration: 3500,
+      show: {
+          effect: 'fade',
+          options: {},
+          speed: 250,
+          callback: function(){}
+      },
+      hide: {
+          effect: 'fade',
+          options: {},
+          speed: 250,
+          callback: function(){}
+      },
+      fancyHide: true,
+      sticky: false,
+      stack: "below"
+  },
+  content: {
+      title: "Notification",
+      content: function() {
+          return $(this).attr("title");
+      },
+      template: "<h4>${Title}</h4><p>${Content}</p>",
+  },
+  _init: function(){
+      // container for notifications
+      this.notifications = [];
+
+      // notification dummy
+      this.notification = $("<div></div>")
+          .attr("role", "notification")
+          .attr("aria-hidden", "true")
+          .addClass("ui-notification ui-widget ui-corner-all")
+          .hide();
+
+      if (this.options.stack == "below") {
+          this.notification.css('marginBottom', this.options.offset);
+      } else {
+          this.notification.css('marginTop', this.options.offset);
+      }
+
+      // notification close button dummy
+      this.notificationClose = $("<a/>")
+          .attr("href", "#")
+          .attr("role", "button")
+          .addClass("ui-notification-close ui-corner-all")
+          .hover(function(){
+              $(this).addClass("ui-state-hover");
+          }, function(){
+              $(this).removeClass("ui-state-hover");
+          })
+          .append(
+              $("<span></span>")
+                  .addClass("ui-icon ui-icon-closethick")
+                  .text("close")
+          );
+
+      // notification content dummy
+      this.notificationContent = $("<div></div>")
+          .addClass("ui-notification-content");
+  },
+
+  enable: function() {
+      this.options.disabled = false;
+  },
+
+  disable: function() {
+      this.options.disabled = true;
+  },
+
+  widget: function(index) {
+      return index ? this.notifications[index] : this.notifications;
+  },
+
+  index: function() {
+      return increments;
+  },
+
+  create: function(content, options) {
+      var self = this;
+
+      // get defaults
+      content = $.extend({}, this.content, content);
+
+      // override options if necessary
+      options = $.extend({}, this.options, options);
+
+      if (options.disabled) {
+          return;
+      }
+
+      // create a new notification instance
+      this.notifications.push(new $.ui.notification.instance(this)._create(content, $.extend({}, this.options, options)));
+  }
+});
+
+// instance constructor
+$.extend($.ui.notification, {
+  instance: function(widget){
+      this.parent = widget;
+  }
+});
+
+// notification instance
+$.extend($.ui.notification.instance.prototype, {
+  _create: function(content, options){
+      this.options = options;
+
+      // render content template
+      var content = content.template
+          .replace("${Title}", content.title)
+          .replace("${Content}", content.content);
+
+      // create notification element
+      this.element = this.parent.notification.clone(true).attr("id", "ui-notification-"+increments++)
+          // append the content
+          .append(this.parent.notificationContent.clone().html(content))
+          // add custom class
+          .addClass(options.notificationClass);
+
+      if (options.stack == "below") {
+          this.element.appendTo(this.parent.element);
+      } else {
+          this.element.prependTo(this.parent.element);
+      }
+
+      // if sticky, add close button
+      var self = this;
+      if (options.sticky) {
+          this.parent.notificationClose
+              .clone(true)
+              .click(function(event){
+                  self.hide();
+                  return false;
+              })
+              .prependTo(this.element);
+      } else {
+          // otherwise set timeout to close it automatically
+          setTimeout(function(){self.hide();}, self.options.duration);
+      }
+
+      // let's show the notifiction
+      this.show();
+
+      // return instance
+      return this;
+  },
+  show: function(){
+      var anim = this.options.show;
+      this.element
+          .attr("aria-hidden", "false")
+          .show(
+              anim.effect,
+              anim.options,
+              anim.speed,
+              anim.callback
+          );
+  },
+  hide: function(){
+      var self = this,
+          anim = this.options.hide,
+          wrap = $("<div></div>")
+              .height(this.element.outerHeight(true));
+
+      if (this.options.fancyHide) {
+          this.element.wrap(wrap);
+      }
+      this.element.hide(
+          anim.effect,
+          anim.options,
+          anim.speed,
+          function(){
+              if (self.options.fancyHide) {
+                  $(this).parent().animate({ height: 0},
+                      250,
+                      function(){
+                          $(this).remove();
+                      }
+                  );
+              } else {
+                  $(this).remove();
+              }
+              if (anim.callback) {
+                  anim.callback();
+              }
+          }
+      );
+  }
+
+});
+
+})( jQuery );
+
+$(function(){
+
+  $(".ui-notification-container").notification();
+  $(".ui-notification-bottomleft").notification({
+      stack: "above"
+  });
+  $(".ui-notification-bar").notification({
+      notificationClass: "ui-state-highlight",
+      offset: 0,
+      sticky: true,
+      fancyHide: false,
+      show: {
+          effect: 'blind',
+          options: {
+              direction: 'vertical'
+          },
+          speed: 250,
+          callback: function(){}
+      },
+      hide: {
+          effect: 'blind',
+          options: {
+              direction: 'vertical'
+          },
+          speed: 250,
+          callback: function(){}
+      },
+  });
+
+  $("button.default").click(function(){
+
+      $(".ui-notification-container").notification("create", {
+          title: "Hello world!",
+          content: "I am a default notification"
+      });
+
+  });
+
+  $("button.sticky").click(function(){
+
+      $(".ui-notification-container").notification("create", {
+          title: "Hello world!",
+          content: "I am a sticky notification"
+      },
+      {
+          sticky: true
+      });
+
+  });
+
+  $("button.custom-anim").click(function(){
+
+      $(".ui-notification-container").notification("create", {
+          title: "Hello world!",
+          content: "I am a sticky notification"
+      },
+      {
+          show: {
+              effect: 'bounce',
+              options: {},
+              speed: 250,
+              callback: function(){}
+          },
+          hide: {
+              effect: 'clip',
+              options: {},
+              speed: 250,
+              callback: function(){}
+          }
+      });
+
+  });
+
+  $("button.error").click(function(){
+       $(".ui-notification-container").notification("create", {
+          title: "Error",
+          content: "This is an error notification"
+       }, { sticky: true, notificationClass: "ui-state-error" });
+  });
+
+  $("button.bottomleft").click(function(){
+       $(".ui-notification-bottomleft").notification("create", {
+          title: "Bottom left!",
+          content: "I will stack above"
+       });
+  });
+
+  $("button.bar").click(function(){
+      var n = $(".ui-notification-bar").notification("create", {
+          title: "Notification bar",
+          content: "I am a notification bar"
+      }).notification("index");
+
+      var notification = $(".ui-notification-bar").notification("widget", n);
+      console.log(notification);
+  });
+
+
+});
+
+</script>
+    {% block pageSpecificJS %}
+    {% endblock %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144735720-4"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-144735720-4');
+      </script>
+    <!-- Google Analytics Script Ends-->
+
+  </body>
+</html>

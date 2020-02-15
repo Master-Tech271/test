@@ -1,0 +1,44 @@
+{% extends 'drivingtest/base.html' %}
+
+
+
+{% block body %}
+<style>
+    center a{
+        transition:.4s;
+    }
+    center a:hover{
+        color:white;
+        text-decoration:none;
+        box-shadow:0 3px 6px black!important;
+    }
+</style>
+<main class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+<p style="position:relative;left:50%;transform:translateX(-50%);display: inline-block;background: white;padding: 1em;box-shadow: 0 2px 5px black;border-radius: 2px;">
+    
+{% trans "Successfully completed the test"%}<br>{% trans "Your Score"%}: {{score}}/{{No_of_questions}}
+
+</p>
+
+<br>    
+<p>
+    <center>
+        <img src="https://i.ibb.co/9rWq3H5/success.gif" alt="success" style="width: 135px;box-shadow: 0 2px 5px black;" border="0">
+    </center>
+</p>    
+<br>    
+<p>
+    <center>
+    <a style="	background: #8259fe;color:white;padding: .5em;	border-radius: 2px;	box-shadow: 0 2px 5px black;" href='{% url 'logout' %}'>{% trans "Click here to logout"%}</a>
+    </center>
+    </p>
+      
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}

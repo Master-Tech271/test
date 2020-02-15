@@ -1,0 +1,66 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+<style>
+        body{
+            background-color: #F0F0F7;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .container{
+            background-color: white;
+            padding: 10px 10px;
+            margin: 60px 10px 10px;; 
+        }
+  
+        .radio{
+            padding:2px 2px 2px 5px
+        }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+        <h1 style="font-family: 'Source Sans Pro', sans-serif; font-weight:bold; color: #43425D;text-align:left">Test review</h1>
+        <hr style="border-top: 1px solid #707070">
+        <p style="font-family: 'Source Sans Pro', sans-serif; color: #43425D;"><b>{% trans "Question 1."%}</b> {% trans "The sign represents."%}.</p>
+        <p><!--For Image--></p>
+                <div class="radio" style="background-color: #FF6565;">
+                <label><input type="radio" name="optradio" checked>{% trans "Option 1"%}</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="optradio">{% trans "Option 2"%}</label>
+              </div>
+              <div class="radio disabled" style="background-color: #7AFF9B;">
+                <label><input type="radio" name="optradio" checked>{% trans "Option 3"%}</label>
+              </div>
+              <div class="radio">
+                    <label><input type="radio" name="optradio">{% trans "Option 4"%}</label>
+            </div>
+            <hr style="border-top: 1px solid #707070">
+        
+        <p style="font-family: 'Source Sans Pro', sans-serif; color: #43425D;"><b>{% trans "Question"%} 2.</b> {%"The code 123 represents.."%}</p>
+            <p><!--For Image--></p>
+                    <div class="radio" >
+                    <label><input type="radio" name="optradio">{% trans "Option"%} 1</label>
+                  </div>
+                  <div class="radio">
+                    <label><input type="radio" name="optradio">{% trans "Option"%} 2</label>
+                  </div>
+                  <div class="radio disabled" style="background-color: #7AFF9B;">
+                    <label><input type="radio" name="optradio" checked>{% trans "Option"%} 3</label>
+                  </div>
+                  <div class="radio">
+                        <label><input type="radio" name="optradio">{% trans "Option"%} 4</label>
+                </div>
+                <hr style="border-top: 1px solid #707070">
+                <a href="{% url 'home' %}" ><button type="button" class="btn btn-md" name="BackToHome" style="background-color: #43425D; border:1px solid #43425D;color:white;font-family: 'Source Sans Pro', sans-serif;">{%trans "Back To Home" %}</button></a>
+                
+        
+</div>
+
+{% endblock %}
+
+{% block pageSpecificJS %}
+{% endblock %}

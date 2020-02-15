@@ -1,0 +1,179 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<style media="screen">
+	body{
+		margin:0;
+		padding: 0;
+
+			background:whitesmoke;
+			font-family:Source Sans Pro;
+
+	}
+	#result{
+		border:1px solid lightgrey;
+		width: 300px;
+		transform: translate(-50%,0);
+		padding: 10px;
+
+	}
+
+
+	.list{
+		margin-top: 100px;
+		text-align: center;
+		font-size: 25px;
+	}
+
+	.question{
+		font-size: 20px;
+
+	}
+	.options{
+		margin: 15px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.options-wrong{
+		margin: 15px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		background-color:rgb(255,0,0,0.1);
+
+	}
+	.options-correct{
+		margin: 15px;
+
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		background-color:  rgb(0,255,0,0.1);
+	}
+	.answers{
+		font-size: 18px;
+
+	}
+	.dots{
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		border: 1px solid black;
+		margin-right: 10px;
+	}
+	.correct-answer{
+		border:1px solid green;
+		background-color: green;
+	}
+	.wrong-answer{
+		border:1px solid red;
+		background-color: red;
+	}
+
+	#result{
+		position:relative;
+		left:50%;
+		transform:translateX(-50%);
+		background:white;
+		text-align:center;
+		width:500px;
+		height:300px;
+	}
+	#result .btn-primary{
+		background:#43425D;
+		color:white;
+	}
+</style>
+{% endblock  %}
+	{% block body %}
+<main class="container">
+	<div id="result">
+		<p class="success">{% trans "Test Submitted Successully"%}</p>
+		<h1 class="score"><b>{% trans "Your Score" %}: {{score}}/{{No_of_questions}}</b></h1>
+
+		<p style="display:flex;justify-content:space-evenly;font-size:20px;">
+			<span>{% trans "Correct Answers"%} : {{score}}</span>
+			<span>{% trans "Incorrect Answers"%} : {{incorrectQues}}</span>
+
+			</p>
+		<p style="display:flex;justify-content:space-evenly">
+			<span>{% trans "Total Questions"%} : {{No_of_questions}}</span>
+			<span>{% trans "Total Answered"%} : {{attemptQns|length}}</span>
+			<span>{% trans "Not Answered"%} : {{unattemptQLen}}</span>
+			</p>
+			<hr>
+		<p style="display:flex;justify-content:space-evenly">
+		<a href="{% url 'drivingtest_test' %}"><button class="btn btn-outline-secondary" type="button" name="button">{% trans "Start New Quiz"%}</button></a>
+		<button onclick='testReview()' class="btn btn-primary" type="button" name="button">{% trans "Review Test"%}</button>
+		</p>
+
+	</div>
+
+	<div class='hide' id='review'>
+		<p style="background:#43425D;color:white;" class="list">{% trans "Test Review"%}</p>
+	{% for q in Qns %}
+	<div class="another">
+			<p class="question"> {% trans "Q"%}{{forloop.counter}} {{q.question}} </p>
+			{% if q.image %}
+
+			<img src='{{q.image.url}}' style='width:7%'>
+
+			{% endif %}
+
+
+
+			{% for o in q.option_set.all %}
+
+			{% if o.answer %}
+
+
+			<div class="options-correct">
+				<div class="correct-answer dots"></div>
+				{% if o.image %}
+				<div class="answers"><img src='{{o.image.url}}' style='width:7%'></div>
+				{% else %}
+				<div class="answers">{{o.text}} </div>{% if o.uid in attemptQns %}<span style='color:green;float:right' > <b>&nbsp;{% trans "Right Attempt"%}</b></span>{% endif %}
+				{% endif %}
+			</div>
+
+			{% elif o.uid in attemptQns %}
+
+			<div class="options-wrong">
+				<div class="wrong-answer dots"></div>
+				{% if o.image %}
+				<div class="answers"><img src='{{o.image.url}}' style='width:7%'></div>
+				{% else %}
+				<div class="answers">{{o.text}}</div>
+				{% endif %}
+			</div>
+			{% else %}
+
+			<div class="options">
+				<div class="normal dots"></div>
+				{% if o.image %}
+				<div class="answers"><img src='{{o.image.url}}' style='width:7%'></div>
+				{% else %}
+				<div class="answers">{{o.text}}</div>
+				{% endif %}
+			</div>
+
+
+			{% endif %}
+			{% endfor %}
+
+
+	</div>
+	{% endfor %}
+	</div><br><br><br><br>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+function testReview(){
+	$('#review').removeClass('hide');
+}
+</script>
+	{% endblock %}

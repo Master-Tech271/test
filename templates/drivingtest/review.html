@@ -1,0 +1,76 @@
+<!-- {% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+
+
+{% endblock %}
+{% block body %} -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+      body{
+          background-color: #F0F0F7;
+          font-family: 'Source Sans Pro', sans-serif;
+      }
+      .container{
+          background-color: white;
+          padding: 20px 40px;
+          margin-top: 20px; 
+      }
+
+      .radio{
+          padding:2px 2px 2px 5px
+      }
+      
+  </style>
+</head>
+
+<body>
+<div class="container">
+    <h1 style="font-family: 'Source Sans Pro', sans-serif;font-weight:bold; color: #43425D;text-align:left">{% trans "Test review"%}</h1>
+    <hr>
+    <p style="font-family: 'Source Sans Pro', sans-serif; color: #43425D;"><b>{% trans "Question"%} 1.</b> {% trans "The sign represents"%}..</p>
+    <p><!--For Image--></p>
+            <div class="radio" style="background-color: #FF6565;">
+            <label><input type="radio" name="optradio" checked>{% trans "Option"%} 1</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="optradio">{% trans "Option"%}</label>
+          </div>
+          <div class="radio disabled" style="background-color: #7AFF9B;">
+            <label><input type="radio" name="optradio" checked>{% trans "Option"%}</label>
+          </div>
+          <div class="radio">
+                <label><input type="radio" name="optradio">{% trans "Option"%}</label>
+        </div>
+        <hr>
+    
+    <p style="font-family: 'Source Sans Pro', sans-serif; color: #43425D;"><b>{% trans "Question"%} 2.</b> {% trans "The code 123 represents.."%}</p>
+        <p><!--For Image--></p>
+                <div class="radio" >
+                <label><input type="radio" name="optradio">{% trans "Option"%} 1</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="optradio">{% trans "Option"%} 2</label>
+              </div>
+              <div class="radio disabled" style="background-color: #7AFF9B;">
+                <label><input type="radio" name="optradio" checked>{% trans "Option"%} 3</label>
+              </div>
+              <div class="radio">
+                    <label><input type="radio" name="optradio">{% trans "Option"%} 4</label>
+            </div>
+            <hr>
+    
+</div>
+</body>
+</html>

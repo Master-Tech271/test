@@ -1,0 +1,183 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+<style>
+   body{
+            font-family: 'Source Sans Pro', sans-serif; 
+            background-color: #F0F0F7;
+        }
+    .container{
+        padding: 20px;
+        background-color: white;
+        margin: 70px 12px 20px 10px;  
+    }
+
+    .row .col-xs-2{
+        margin: 3px;
+    }
+    .row .col-xs-2 div{
+       text-align:center;
+       padding-top: 10px;
+       font-family: 'Source Sans Pro', sans-serif;
+       font-weight: 600;
+    }
+    
+</style>
+{% endblock %}
+{% block navbartime %}
+
+<!-- <li><a data-toggle="modal" data-target="#instructionsModal" style="font-family:'Roboto Slab',serif"><b>Instructions</b></a></li> -->
+<div class="info timer" style="margin-top:12px;font-family: 'Source Sans Pro', sans-serif;">
+  <button type="button" name="button" disabled style="font-family: 'Source Sans Pro', sans-serif;margin-left:15px;background-color:white;"><i class="fas fa-clock"></i> &nbsp;30 : 00</button>
+</div>
+
+{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row" >
+        <div class="col-xs-2" >
+            <div style="border: 1px solid #707070;width:50px;height:50px;">1</div>
+        </div>
+        <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">2</div>
+        </div>
+        <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">3</div>
+        </div>
+        <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">4</div>
+         </div>
+         <div class="col-xs-2" >
+            <div style="border: 1px solid #707070;width:50px;height:50px;">5</div>
+        </div>
+    </div>
+
+    <div class="row" >
+            <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">6</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">7</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">8</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">9</div>
+             </div>
+             <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">10</div>
+            </div>
+    </div>
+
+    <div class="row" >
+            <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">11</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">12</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">13</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">14</div>
+             </div>
+             <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">15</div>
+            </div>
+    </div>
+
+    <div class="row" >
+            <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">16</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">17</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">18</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">19</div>
+             </div>
+             <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">20</div>
+            </div>
+    </div>
+
+    <div class="row" >
+            <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">21</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">22</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">23</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">24</div>
+             </div>
+             <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">25</div>
+            </div>
+    </div>
+
+    <div class="row" >
+            <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">26</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">27</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">28</div>
+            </div>
+            <div class="col-xs-2" >
+                    <div style="border: 1px solid #707070;width:50px;height:50px;">29</div>
+             </div>
+             <div class="col-xs-2" >
+                <div style="border: 1px solid #707070;width:50px;height:50px;">30</div>
+            </div>
+    </div>
+    <br>
+    <h4 style=" width:100%;color:#43425D;font-family: 'Source Sans Pro', sans-serif;"> <strong>{% trans "Legends :"%}</strong>  </h4>
+    <div class="row">
+          <div class="col-xs-6">
+            <div style="background-color:#FF6565; border:1px solid; width:30px; height:30px;float:left; margin:5px 3px 2px 0px;"></div>
+            <p style="margin-top:5px; width:100%;color:#43425D;font-family: 'Source Sans Pro', sans-serif;"> <strong>{% trans "Not Answered"%}</strong>  </p>
+          </div>
+          <div class="col-xs-6">
+              <div style="background-color:white; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 0px;"></div>
+              <p style="margin-top:5px; width:100%;color:#43425D;font-family: 'Source Sans Pro', sans-serif;"><strong>{% trans "Not Visited<"%}/strong> </p>
+            </div>
+        </div>
+    <div class="row">
+            <div class="col-xs-6">
+              <div style="background-color:#7AFF9B; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 0px;"></div>
+              <p style="margin-top:5px; width:100%;color:#43425D;font-family: 'Source Sans Pro', sans-serif;"><strong>{% trans "Answered"%}</strong> </p>
+            </div>
+            <div class="col-xs-6">
+                <div style="background-color:#3B86FF; border:1px solid;width:30px; height:30px;float:left;margin:5px 3px 2px 0px;"></div>
+                <p style=" width:100%;color:#43425D;font-family: 'Source Sans Pro', sans-serif;"> <strong>{% trans "Marked for Review"%}</strong> </p>
+              </div>
+    </div>
+    <hr style="border-top:2px solid #eeeeee;">
+    <div class="row" >
+            <div class="col-xs-6" style="padding-left:30px;">
+             <a href="{% url 'mobilequestions' %}" style="text-decoration: none;cursor:pointer"><button type="button" class="btn btn-md" name="back_to_test" style="background-color:#43425D; border:1px solid #43425D; color:white;float: right;font-family: 'Source Sans Pro', sans-serif;">{% trans "Back To Test"%}</button></a>
+            </div>
+            <div class="col-xs-6" style="padding-left:0px;">
+                <button type="button" class="btn btn-md " name="final_submit" style="background-color:#FF6565; border:1px solid #FF6565;color:white;float: left;font-family: 'Source Sans Pro', sans-serif;">{% trans "Final Submit"%}</button>
+            </div>
+        </div>
+</div>
+
+
+{% endblock %}
+
+{% block pageSpecificJS %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'drivingtest/base.html' %}
+{% load static %}
+{% block pageSpecificCSS %}
+{% endblock %}
+{% block body %}
+
+
+<main class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+
+<center>
+<p>{% trans "We could not submit your test due to session expire."%}</p>
+<p>{% trans "Make sure you have good internet connection."%}</p>
+
+
+
+<a class="btn btn-info" href="{% url 'logout' %}">Logout here</a><br>
+
+</center>
+
+    </div>
+  </div>
+<div class="">
+  <br><br><br><br><br>
+  
+  <br><br><br><br><br>
+
+</div>
+</main>
+
+
+{% endblock %}

@@ -1,0 +1,76 @@
+<!-- {% extends 'drivingtest/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block pageSpecificCSS %}
+
+
+{% endblock %}
+{% block body %} -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Large Modal</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content" style="padding: 10px 40px 10px;">
+          <div class="modal-header" style="text-align: center; border-bottom:none;">
+            
+            <h4 class="modal-title" style="font-family: 'Source Sans Pro', sans-serif; color: #43425D;">Test Submitted Successfully!</h4>
+            <br>
+            <h3 class="modal-title" style="font-family: 'Source Sans Pro', sans-serif; font-weight:bold;color: #43425D;">Your Score : </h3>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-6" style="text-align: center;">
+                    <i class="fas fa-check fa-3x" style="color: #7AFF9B;"></i><p style="font-family: 'Source Sans Pro', sans-serif;color:#43425D"><strong>Correct Answers: </strong></p>
+                </div>
+                <div class="col-sm-6" style="text-align: center;">
+                    <i class="fas fa-times fa-3x" style="color: #FF6565;"></i><p style="font-family: 'Source Sans Pro', sans-serif;color:#43425D"><strong>Correct Answers: </strong></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4" style="text-align: left;">
+                   <p style="font-family: 'Source Sans Pro', sans-serif;color:#43425D">{% trans "Total Question"%}: 30</p>
+                </div>
+                <div class="col-sm-4" style="text-align: center;">
+                    <p style="font-family: 'Source Sans Pro', sans-serif;color:#43425D">{% trans "Total Answered"%}: </p>
+                </div>
+                <div class="col-sm-4" style="text-align: center;">
+                    <p style="font-family: 'Source Sans Pro', sans-serif;color:#43425D">{% trans "Not Answered"%}: </p>
+                </div>
+            </div>
+            <hr style="border-top:1px solid #707070">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="{% url 'home' %}" style=""><button type="button" class="btn btn-md" name="BackToHome" style="background-color: white; border:1px solid #43425D;color:#43425D;float:right;font-family: 'Source Sans Pro', sans-serif;">{% trans "Back To Home"%}</button></a>
+                </div>
+                <div class="col-sm-6">
+                    <a href="" style="font-family: 'Source Sans Pro', sans-serif;"><button type="button" class="btn btn-md" name="Review" style="background-color: #43425D; border:1px solid #43425D;color:white;float:left;font-family: 'Source Sans Pro', sans-serif;">{% trans "Review Test"%}</button></a>
+                </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+<!-- {% endblock %} -->
